@@ -1,6 +1,6 @@
 # L1: one-generated 1518-magmas satisfying 3862 are trivial or the Z/3 shift
 
-Research note, 5 September 2026. Status: **proved and Lean-checked.** The nine equational proofs found by Vampire 5.1.0 were transcribed into core Lean 4.33.1 (`research/audit/lean/OneGenerated1518.lean`): the multiplication table of `{x, S x, S S x}` and the closure of words carry **no axioms at all**; the one-or-three-elements statement uses only `propext`, `Classical.choice`, `Quot.sound`. No finiteness, no solver, no census. Companion to `L2_NOTE.md` and `BASELINE_AUDIT.md`. Everything in `research/audit/atp/` and `research/audit/census_lean/`.
+Research note, 5 September 2026. Status: **proved and Lean-checked.** The nine equational proofs found by Vampire 5.1.0 were transcribed into core Lean 4.33.1 (`lean/OneGenerated1518.lean`): the multiplication table of `{x, S x, S S x}` and the closure of words carry **no axioms at all**; the one-or-three-elements statement uses only `propext`, `Classical.choice`, `Quot.sound`. No finiteness, no solver, no census. Companion to `paper/L2_NOTE.md` and the lab's audit (not published). Everything in `atp/` and `lean/census/`.
 
 ## 1. Statement
 
@@ -20,7 +20,7 @@ Vampire 5.1.0 in CASC mode proves each of the nine closure statements
 ∀x.  u ◇ v = x  ∨  u ◇ v = S(x)  ∨  u ◇ v = S(S(x))        for u, v ∈ {x, S(x), S(S(x))}
 ```
 
-from the two equational axioms alone, in milliseconds; the nine statements conjoined are proved in one run (`research/audit/atp/min_e3862.p`). Proof objects with 9 to 42 lines are in `research/audit/atp/closure_*.proof` (those were produced with the four targets and the left-quasigroup axioms present; the minimisation runs show 1518 + 3862 suffice). Hypothesis minimisation, 60 s per run, all nine statements at once:
+from the two equational axioms alone, in milliseconds; the nine statements conjoined are proved in one run (`atp/min_e3862.p`). Proof objects with 9 to 42 lines are in `atp/closure_*.proof` (those were produced with the four targets and the left-quasigroup axioms present; the minimisation runs show 1518 + 3862 suffice). Hypothesis minimisation, 60 s per run, all nine statements at once:
 
 | Extra axioms beyond 1518 | Result |
 | --- | --- |
@@ -36,13 +36,13 @@ The corollary follows by induction on words: every word in `x` lies in `{x, S(x)
 
 ## 3. Consequences
 
-**The obstruction theorem becomes unconditional for 3862.** Combining with `L2_NOTE.md` (every constant-coefficient 1518-extension of the shift by a finite fibre is a direct product):
+**The obstruction theorem becomes unconditional for 3862.** Combining with `paper/L2_NOTE.md` (every constant-coefficient 1518-extension of the shift by a finite fibre is a direct product):
 
 > Let `H` be any 1518-magma satisfying 3862, `M` a finite abelian group with `α, β` making `αs + βt` a 1518-magma, and `f` a 1518-cocycle on `H`. Then `H ×_f M` satisfies 47, 614, 817 and 3862.
 
 Proof: a violation at `(x, s)` lives in the sub-extension over `<x>`, which is trivial or the shift by L1′, and over those bases every 1518-cocycle is a coboundary (or, for the trivial base, a target cocycle), so the sub-extension satisfies the targets. Hence constant-coefficient cohomology can never refute `1518 ⇒ 3862` from any base: if the extension violates 3862, the base already did.
 
-**All four targets, finite bases.** Vampire also proves (`research/audit/atp/imp_*.p`, 60 s each) that under 1518 plus left injectivity and left surjectivity, which hold in every finite 1518-magma, the four targets are pairwise equivalent (all twelve implications are theorems); without finiteness, 3862 implies each of 47, 614, 817, and 47 and 614 imply each other, while the remaining six directions time out. Therefore:
+**All four targets, finite bases.** Vampire also proves (`atp/imp_*.p`, 60 s each) that under 1518 plus left injectivity and left surjectivity, which hold in every finite 1518-magma, the four targets are pairwise equivalent (all twelve implications are theorems); without finiteness, 3862 implies each of 47, 614, 817, and 47 and 614 imply each other, while the remaining six directions time out. Therefore:
 
 > **Theorem (full obstruction, finite bases).** Let `H` be a finite 1518-magma, `M` a finite abelian group with `α, β` making `αs + βt` a 1518-magma, and `f` a 1518-cocycle on `H`. If `H ×_f M` violates one of 47, 614, 817, 3862, then `H` already violates it.
 
