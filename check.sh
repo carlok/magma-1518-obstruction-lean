@@ -3,7 +3,7 @@
 set -e
 cd "$(dirname "$0")"
 LEAN="$(lean +v4.33.1 --print-prefix)/bin/lean"
-for f in lean/OneGenerated1518.lean lean/L2Cert.lean lean/H2Cert.lean lean/census/CensusBridge.lean; do
+for f in lean/OneGenerated1518.lean lean/L2Cert.lean lean/H2Cert.lean lean/FamilyF5.lean lean/FamilyF13.lean lean/census/CensusBridge.lean; do
   echo "== $f"; "$LEAN" -M 8192 "$f" | grep -E "axioms|error"
 done
 for n in 2 3 4 5 6 7 8; do

@@ -1,0 +1,4 @@
+p=43 (3 mod 4): beta 338688; pairs 7056; refuting 0; 47/3862 mismatches 0; (ord D, holds 47) -> count {(1, True): 7056}; squaring types of refuters {}   [147s]
+p=47 (3 mod 4): beta 478216; pairs 8464; refuting 0; 47/3862 mismatches 0; (ord D, holds 47) -> count {(1, True): 8464}; squaring types of refuters {}   [235s]
+p=53 (1 mod 4): beta 692224; pairs 21632; refuting 5408; 47/3862 mismatches 0; (ord D, holds 47) -> count {(1, True): 16224, (4, False): 5408}; squaring types of refuters {(12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 3): 5408}   [491s]
+p=61 (1 mod 4): beta 972000; pairs 28800; refuting 7200; 47/3862 mismatches 0; (ord D, holds 47) -> count {(1, True): 21600, (4, False): 7200}; squaring types of refuters {(12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 3): 7200}   [904s]

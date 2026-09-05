@@ -1,0 +1,2 @@
+F_9: 27 elements; 1518 holds; 47 fails, 614 fails, 817 fails, 3862 fails
+Z/25 (i = 7): 75 elements; 1518 holds; 47 fails, 614 fails, 817 fails, 3862 fails

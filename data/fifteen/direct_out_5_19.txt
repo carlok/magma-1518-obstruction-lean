@@ -1,0 +1,5 @@
+p=5 (1 mod 4): beta 160; pairs 128; refuting 32; 47/3862 mismatches 0; (ord D, holds 47) -> count {(1, True): 96, (4, False): 32}; squaring types of refuters {(12, 3): 32}   [0s]
+p=7 (3 mod 4): beta 432; pairs 144; refuting 0; 47/3862 mismatches 0; (ord D, holds 47) -> count {(1, True): 144}; squaring types of refuters {}   [0s]
+p=11 (3 mod 4): beta 3400; pairs 400; refuting 0; 47/3862 mismatches 0; (ord D, holds 47) -> count {(1, True): 400}; squaring types of refuters {}   [0s]
+p=13 (1 mod 4): beta 6048; pairs 1152; refuting 288; 47/3862 mismatches 0; (ord D, holds 47) -> count {(1, True): 864, (4, False): 288}; squaring types of refuters {(12, 12, 12, 3): 288}   [1s]
+p=19 (3 mod 4): beta 19440; pairs 1296; refuting 0; 47/3862 mismatches 0; (ord D, holds 47) -> count {(1, True): 1296}; squaring types of refuters {}   [3s]

@@ -11,6 +11,7 @@
 \theoremstyle{remark}\newtheorem*{remark}{Remark}
 \newcommand{\op}{\diamond}
 \newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\End}{\mathrm{End}}
 \newcommand{\Eq}[1]{\mathrm{E}#1}
@@ -150,7 +151,7 @@ In every magma satisfying 1518 and 3862, for every $x$ and all $u,v$ in the set 
 
 Vampire 5.1.0 found equational proofs of these nine equalities in milliseconds from 1518 and 3862 alone, by superposition and demodulation (9 to 32 proof lines each, \texttt{atp/eq\_*.proof}); they were transcribed into core Lean 4.33.1 (\texttt{lean/OneGenerated1518.lean}): the table and the closure of words in $x$ are proved with no axioms at all, and the one-or-three-elements statement with \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound} only. The classification therefore needs neither finiteness nor the SAT census. This is Tao's conjecture of 2024-11-29 in a stronger form: without finiteness and with one target instead of four. The target cannot be dropped: \texttt{Refutation939} is a one-generated 1518-magma with 15 elements, and it violates 3862 (60 of its 135 closure products leave the set). As a control, on all 41\,319 six-element 1518-magmas the largest one-generated submagma has 3 elements.
 
-Vampire also shows that under 1518 together with left injectivity and left surjectivity, which hold in every finite 1518-magma, the four targets 47, 614, 817, 3862 are pairwise equivalent (twelve theorems), and that equationally 3862 implies the other three. Hence:
+Vampire also shows that under 1518 together with left injectivity and left surjectivity, which hold in every finite 1518-magma, the four targets 47, 614, 817, 3862 are pairwise equivalent (twelve theorems), and that equationally 3862 implies the other three. This re-derives an observation of Bruno Le Floch (Lean Zulip, Equational stream, October 2025): in a finite 1518-magma the squaring map and all left multiplications are bijective, and the single-variable targets are then equivalent to each other and to $S^3x=x$. Hence:
 
 \begin{theorem}[full obstruction, finite bases]\label{thm:full}
 Let $H$ be a finite 1518-magma, $M$ a finite abelian group with $\alpha,\beta$ making $\alpha s+\beta t$ a 1518-magma, and $f$ a 1518-cocycle on $H$. If the extension $H\times_f M$ violates one of 47, 614, 817, 3862, then $H$ already violates it.
@@ -161,6 +162,27 @@ If $H$ satisfies the target then, being finite, it satisfies 3862; by Theorem~\r
 \end{proof}
 
 So constant-coefficient abelian cohomology never refutes any of these four implications from any finite base. Non-vanishing $H^{2}$ over other bases is real: $H^{2}_{1518}$ is nonzero for the right projection on two elements and for every 1518-base of sizes 4 and 5, and such extensions do refute two-variable laws ($1518\Rightarrow 632$ and $1518\Rightarrow 879$ at carrier 6, from the base $[[0,1,2],[0,1,2],[1,0,2]]$ with fibre $\Z/2$), but by Theorem~\ref{thm:full} they cannot touch the one-variable targets. The remaining prose in this section is the finite-base equivalence of the four targets and the assembly of Theorem~\ref{thm:full}.
+
+\section{Base-dependent extensions of the shift: an explicit family}\label{sec:family}
+
+Question~3 below asked whether the 15-element models are the generic case of something. Over the shift they are. Let $(x,s)\op(y,t)=(y+1,\ a_{xy}s+b_{xy}t+c_{xy})$ on $\Z/3\times\F_p$ with coefficients depending on the base pair. Law 1518 is equivalent to two families of identities in $(a,b)$, $b_{y+1,x+2}\,(a_{x,x+1}+b_{x,x+1}b_{y,x})=1$ and $a_{y+1,x+2}\,d_y+b_{y+1,x+2}\,b_{x,x+1}\,a_{y,x}=0$ with $d_z=a_{zz}+b_{zz}$, together with a homogeneous linear system for $c$; whether the four targets hold depends only on $(a,b)$. The second family links the entries of $a$ along the three orbits of $(u,v)\mapsto(u+2,v+1)$ on $\Z/3\times\Z/3$, so $a$ is determined by $b$, and the whole solution set can be enumerated in $O(p^{5})$ steps (\texttt{basedep\_direct.py}).
+
+Rescaling the fibre over each base point, $s\mapsto\lambda_x s$, is an isomorphism of extensions; the group $(\F_p^{*})^{3}/\F_p^{*}$ acts freely on the solutions. The number of solutions is $8(p-1)^{2}$ when $p\equiv1\pmod 4$ and $4(p-1)^{2}$ when $p\equiv3\pmod 4$, of which $2(p-1)^{2}$, respectively none, refute the targets (all $p\le 61$; the formulas were recorded before $p=37,41,43,47,53,61$ were run). So there are eight, respectively four, orbits. Lifting the orbit representatives (normalised by $b_{00}=b_{11}=1$) to $\Q(i)$ by the Chinese remainder theorem over $p=13,17,29,37,41$ and rational reconstruction gives eight tables in which 1518 holds exactly in $\Q(i)$ (\texttt{basedep\_family.py}): the direct product ($a=0$, $b=1$); three rational tables forming one orbit under the base rotation, with entries in $\Z[1/3]$; a Galois-conjugate pair with $D=1$ and entries in $\Z[i]$; and a Galois-conjugate pair with $D=\pm i$, where $D=d_0d_1d_2$ is the scalar by which $S^{3}$ acts on the fibre. The six tables with $D=1$ satisfy all four targets exactly; the last two refute them. In particular the construction gives nothing for $p\equiv3\pmod4$ (proved for $p\le61$ by exhaustion, and over $\overline{\Q}$ by a Gr\"obner basis: after normalising $b_{00}=b_{11}=1$ and inverting all $b_{xy}$ and $d_z$, the ideal of the identities is zero-dimensional of degree 8, so no further solutions exist in characteristic 0, nor in all but finitely many positive characteristics; the same computation over $\F_p$ gives degree 8 for every prime $5\le p\le257$).
+
+\begin{theorem}[explicit family]\label{thm:family}
+Let $R$ be a commutative ring in which $2$ is invertible and $i\in R$ satisfies $i^{2}=-1$, and let $M\neq0$ be an $R$-module. On $\Z/3\times M$ define $(x,s)\op(y,t)=(y+1,\ a_{xy}s+b_{xy}t)$ with
+\[
+a=\begin{pmatrix}-\tfrac{1+i}{2}&-\tfrac12&\tfrac{1-i}{2}\\[2pt] \tfrac{1-i}{2}&-\tfrac{1+i}{2}&1+i\\[2pt] 1+i&\tfrac{1-i}{2}&2i\end{pmatrix},\qquad
+b=\begin{pmatrix}1&\tfrac{1+i}{2}&-(1+i)\\[2pt] \tfrac12&1&-2i\\[2pt] \tfrac{1+i}{2}&\tfrac12&-2(1+i)\end{pmatrix}.
+\]
+Then 1518 holds, and each of 47, 614, 817, 3862 fails.
+\end{theorem}
+
+\begin{proof}
+The two families of identities hold exactly in $\Q(i)$, hence in $\Z[i,1/2]$ and in $R$. Each target law, evaluated on $\Z/3\times M$ with symbolic fibre coordinates, fails by a coefficient difference that is a unit of $\Z[i,1/2]$: $(1+i)/2$ for 47 and 614, $1$ for 817, $-2+2i$ and $-i$ for 3862. A unit kills no nonzero element of $M$.
+\end{proof}
+
+The sizes are $3|M|$: 15 for $M=\F_5$ (Le Floch's models 5 and 6, isomorphism checked), 27 for $\F_9=\F_3[i]$, 39, 51, 75 ($\Z/25$), 87, 111, 123, 147 ($\F_{49}$), and so on; the 27- and 75-element members were re-checked by brute force. Since $d=(\tfrac{1-i}{2},\tfrac{1-i}{2},-2)$, $S^{3}(x,s)=(x,is)$ and the squaring map has order exactly 12. In the five rotation-invariant classes, and only there, $S$ is an endomorphism, the constraint Le Floch used to find the 15-element model. Kernel-\texttt{decide} Lean files (\texttt{lean/FamilyF5.lean}, \texttt{lean/FamilyF13.lean}, no axioms) check 1518, the failure of the four targets, $S^{3}\neq\mathrm{id}$ and $S^{12}=\mathrm{id}$ for the 15- and 39-element members. Le Floch showed (Zulip, 21 October 2025) that in a finite 1518-magma $S$ and all left multiplications are bijective and the single-variable targets are equivalent to $S^{3}x=x$; Mace4 samples at sizes 4 to 9 show orders 1 and 3 only, as they must below size 15. Whether a finite 1518-magma can have squaring of order other than 1, 3, 12 is open.
 
 \section{Verification status}\label{sec:verif}
 
@@ -180,6 +202,7 @@ $H^{2}=0$ numerically & $\dim Z^{2}=\dim B^{2}=2$ at all 39 prime specialisation
 Same identities & re-multiplication in $R$ in Python \\
 Rows \eqref{eq:c1518}--\eqref{eq:c47} are the cocycle conditions; $R$ is the finite-fibre ring & written argument above; not formalized. Independently re-derived by a second program with noncommutative coefficients (words in $\alpha,\beta$), specialised to $R$ only at the end: the identities \eqref{eq:ids} and all rows agree exactly \\
 One-generated classification (Theorem~\ref{thm:closure}) & core Lean 4.33.1, \texttt{lean/OneGenerated1518.lean}: \texttt{table}, \texttt{words\_in\_T} with no axioms; \texttt{one\_or\_three} with the three standard axioms; transcribed from Vampire's equational proofs \\
+Theorem~\ref{thm:family} & exact arithmetic in $\Q(i)$ (Python \texttt{fractions}); classification exhaustive for $p\le61$; members over $\F_5$, $\F_{13}$ by Lean kernel \texttt{decide} (no axioms), over $\F_9$, $\Z/25$ by brute force \\
 Target equivalences under 1518, finite bases & Vampire 5.1.0: twelve theorems with left-quasigroup axioms; equationally $3862\Rightarrow47,614,817$; not in Lean \\
 Unreachable set of Section~\ref{sec:cons} & ETP \texttt{finite\_graph.json} (sha256 \texttt{d609274e\ldots}), row 1518 decoded; control: the 5 finite implications pass the shift and $R$ checks \\
 Structure of \texttt{Refutation939} & exhaustive search over labellings of its three classes by $\Z/5$; $20^{3}$ labellings give base-dependent affine form, none constant (Theorem~\ref{thm:h2} forbids it) \\
@@ -205,7 +228,8 @@ No statement of Theorem~\ref{thm:main} was found in the pinned ETP blueprint, pa
 \begin{enumerate}
 \item Is the vanishing $H^{2}_{1518}(\Z/3\text{ shift}, M)=0$ for all finite 1518-fibres, or the resulting containment, already known or written down somewhere?
 \item Has the conjecture of 485148288 been settled beyond a census? With it, Corollary~\ref{cor:main} would say that constant-coefficient cohomology can never refute these implications from any finite base.
-\item Over the shift the obstruction does \emph{not} survive base-dependent coefficients: \texttt{Refutation939} is such an extension. Has the cohomology with base-dependent coefficients (abelian objects in the slice category, in Bolan's phrasing) been computed for the shift, so that the 15-element models are the generic case of something?
+\item Over the shift the obstruction does \emph{not} survive base-dependent coefficients: \texttt{Refutation939} is such an extension. Has the cohomology with base-dependent coefficients (abelian objects in the slice category, in Bolan's phrasing) been computed for the shift, so that the 15-element models are the generic case of something? Section~\ref{sec:family} answers this over the shift; is the family of Theorem~\ref{thm:family} known?
+\item Does a finite 1518-magma exist whose squaring map has order other than 1, 3 or 12?
 \end{enumerate}
 
 \section{Reproduction}\label{sec:repro}
@@ -221,6 +245,9 @@ Standard-library Python, Mace4 and Lean 4.33.1; inputs pinned by commit. Outputs
 \item \texttt{unreachable\_set.py}: the 13 laws from the ETP finite graph.
 \item \texttt{witness939\_varying.py}: the structure of \texttt{Refutation939}.
 \item \texttt{gen\_census\_lean.py}, \texttt{census\_lean/}: the Lean census proofs and their README.
+\item \texttt{basedep\_direct.py}, \texttt{basedep\_orbits.py}, \texttt{basedep\_family.py}: the enumeration, the orbit representatives and their exact lift (Section~\ref{sec:family}).
+\item \texttt{basedep\_groebner2.py}, \texttt{basedep\_groebner\_modp.py}: the Gr\"obner bases over $\Q$ and over $\F_p$ (sympy 1.14).
+\item \texttt{family\_vs\_fifteen.py}, \texttt{family\_more\_fibres.py}, \texttt{family\_squaring\_morphism.py}, \texttt{gen\_family\_lean.py}: checks of the family and the Lean files.
 \end{itemize}
 
 \end{document}

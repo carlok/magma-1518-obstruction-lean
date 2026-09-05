@@ -1,0 +1,3 @@
+F+ over F_5: squaring cycle lengths [12, 3] isomorphic to Le Floch model(s) [6]
+F- over F_5: squaring cycle lengths [12, 3] isomorphic to Le Floch model(s) [5]
+F+ vs F- over F_5 isomorphic: False

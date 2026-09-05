@@ -1,0 +1,44 @@
+"""Same ideal as basedep_groebner2.py, but Groebner bases over F_p for the given primes: a rigorous per-prime classification.
+Degree 8 (zero-dimensional) means the eight explicit tables T, R0, R1, R2, I+, I-, F+, F- (which are distinct points over the
+algebraic closure of F_p, the last four defined over F_p iff p = 1 mod 4) are ALL solutions over the closure, so the F_p-points are
+exactly the 8 (p = 1 mod 4) or 4 (p = 3 mod 4) known ones.  Usage: venv/bin/python basedep_groebner_modp.py <p> [<p> ...]"""
+import sympy as sp, time, sys
+b = [[sp.Symbol(f"b{x}{y}") for y in range(3)] for x in range(3)]
+b[0][0] = sp.Integer(1); b[1][1] = sp.Integer(1)
+free = [b[0][1], b[0][2], b[1][0], b[1][2], b[2][0], b[2][1], b[2][2]]
+m = lambda k: k % 3
+alpha = [1/b[1][m(x+2)] - b[x][m(x+1)]*b[0][x] for x in range(3)]
+a = [[None]*3 for _ in range(3)]
+for x in range(3): a[x][m(x+1)] = alpha[x]
+for x in range(3): a[m(x+2)][m(x+2)] = -alpha[x]*b[m(x+2)][m(x+2)]*b[x][m(x+2)]
+d = [a[z][z] + b[z][z] for z in range(3)]
+for x in range(3): a[x][m(x+2)] = -b[x][m(x+2)]*b[x][m(x+1)]*alpha[m(x+2)] / d[m(x+2)]
+eqs = []
+for x in range(3):
+    for y in range(3):
+        eqs.append(b[m(y+1)][m(x+2)]*(a[x][m(x+1)] + b[x][m(x+1)]*b[y][x]) - 1)
+        eqs.append(a[m(y+1)][m(x+2)]*d[y] + b[m(y+1)][m(x+2)]*b[x][m(x+1)]*a[y][x])
+nums = []
+for e in eqs:
+    n_, _ = sp.fraction(sp.together(e)); n_ = sp.expand(n_)
+    if n_ != 0: nums.append(n_)
+z = sp.Symbol("z")
+den = sp.Mul(*free) * sp.Mul(*[sp.fraction(sp.together(dz))[0] for dz in d]) * sp.Mul(*[b[1][m(x+2)] for x in range(3)])
+nums.append(sp.expand(z*sp.expand(den) - 1))
+gens = free + [z]
+for p in map(int, sys.argv[1:]):
+    t0 = time.time()
+    G = sp.groebner(nums, *gens, order="grevlex", modulus=p)
+    zd = G.is_zero_dimensional; count = None
+    if zd:
+        lead = [sp.Poly(g, *gens, modulus=p).monoms(order="grevlex")[0] for g in G.exprs]
+        def divisible(mn): return any(all(mi >= li for mi, li in zip(mn, l)) for l in lead)
+        count = 0; frontier = [tuple([0]*len(gens))]; seen = set(frontier)
+        while frontier:
+            mn = frontier.pop()
+            if divisible(mn): continue
+            count += 1
+            for k in range(len(gens)):
+                m2 = list(mn); m2[k] += 1; m2 = tuple(m2)
+                if m2 not in seen and sum(m2) <= 60: seen.add(m2); frontier.append(m2)
+    print(f"p={p} ({p % 4} mod 4): zero-dimensional {zd}, degree {count}   [{time.time()-t0:.0f}s]", flush=True)

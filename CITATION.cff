@@ -13,4 +13,7 @@ abstract: >-
   carries the multiplication table of the cyclic shift, so one-generated such magmas are trivial or the Z/3 shift
   (a conjecture of T. Tao, Nov 2024, in a stronger form); kernel-checked certificates that every 1518-cocycle over
   the shift with finite fibre is a coboundary; hence constant-coefficient abelian extensions of finite 1518-magmas
-  never refute 1518 => 47, 614, 817, 3862. Automated proofs by Vampire, census by Mace4, z3 and Lean bv_decide.
+  never refute 1518 => 47, 614, 817, 3862. Also an explicit family of finite 1518-magmas of sizes 3|M| violating
+  47, 614, 817, 3862, over any ring with 1/2 and a square root of -1 (Lean kernel-checked members of sizes 15 and 39),
+  and the classification of base-dependent extensions of the Z/3 shift: refuting ones exist over F_p iff p = 1 mod 4
+  (exhaustive to p = 61, Groebner bases to p = 257). Automated proofs by Vampire, census by Mace4, z3 and Lean bv_decide.

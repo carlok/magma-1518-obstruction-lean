@@ -1,0 +1,3 @@
+12 polynomials in 8 variables, degrees [4, 7, 4, 4, 5, 3, 11, 10, 3, 3, 7, 20]
+grevlex basis: 29 polynomials, zero-dimensional: True  [23s]
+degree of the ideal (solutions over the closure with multiplicity): 8
