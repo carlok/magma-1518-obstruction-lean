@@ -1,0 +1,3 @@
+fof(e1518, axiom, ![X,Y]: X = m(m(Y,Y), m(X, m(Y,X)))).
+fof(e47, axiom, ![X]: X = m(X, m(X, m(X,X)))).
+fof(goal, conjecture, ![X]: m(X,X) = m(m(X, m(X,X)), X)).

@@ -1,0 +1,226 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{longtable}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}\newtheorem*{remark}{Remark}
+\newcommand{\op}{\diamond}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\End}{\mathrm{End}}
+\newcommand{\Eq}[1]{\mathrm{E}#1}
+
+\title{Constant-coefficient abelian 1518-extensions of the $\Z/3$ shift\\are direct products\\[2mm]\large hence none refutes $1518 \Rightarrow 47,\,614,\,817,\,3862$, and the ETP's 15-element countermodel\\[1mm]\large is an extension of the same base with base-dependent coefficients}
+\author{Carlo Perassi\thanks{Computation and drafting with AI assistance under the author's direction. Everything below is reproducible from a small standard-library script set; see Section~\ref{sec:repro}.}}
+\date{4 September 2026 --- draft for discussion}
+
+\begin{document}
+\maketitle
+
+\section{Setting}
+
+Laws are numbered as in the Equational Theories Project (ETP), \texttt{teorth/equational\_theories} at commit \texttt{88088faa}. Law 1518 is
+\[
+x = (y \op y) \op (x \op (y \op x)),
+\]
+and the four one-variable targets are
+\begin{align*}
+\Eq{47}:&\ \ x = x \op (x \op (x \op x)), &
+\Eq{614}:&\ \ x = x \op (x \op ((x \op x) \op x)),\\
+\Eq{817}:&\ \ x = x \op ((x \op x) \op (x \op x)), &
+\Eq{3862}:&\ \ x \op x = (x \op (x \op x)) \op x .
+\end{align*}
+The smallest finite countermodel to $1518\Rightarrow47$ has 15 elements (Brox and Le Floch, Lean Zulip, October 2025), and the ETP's 15-element table \texttt{Refutation939} refutes all four at once. Every 1518-magma with at most 7 elements satisfies all four (checked here on the complete census of Section~\ref{sec:verif}).
+
+Following the blueprint chapter ``Magma cohomology'', an \emph{extension} of a magma $G$ by an abelian group $M$ with $\alpha,\beta \in \End(M)$ and $f\colon G\times G\to M$ is the magma on $G\times M$ with
+\begin{equation}\label{eq:ext}
+(x,s)\op(y,t) = \bigl(x\op y,\ \alpha s+\beta t+f(x,y)\bigr).
+\end{equation}
+The coefficients $\alpha,\beta$ are constant. If $G$ and the linear magma $(M, \alpha s+\beta t)$ both satisfy a law $E$, the extension satisfies $E$ if and only if $f$ is an \emph{$E$-cocycle}, a linear condition on $f$. Refuting $E\Rightarrow E'$ by this method means exhibiting an $E$-cocycle that is not an $E'$-cocycle.
+
+In November 2024 this method produced the 12-element model for $879 \not\Rightarrow 4065$ (Tao, Lean Zulip, \emph{Austin pairs}, message 484839156: base $(b,i)\op(c,j)=(b+c,\,j+1)$ on $\Z/2\times\Z/3$, fibre $\Z/2$, $\alpha=\beta=1$) and failed for 1518 (Bolan 485027669; Tao 485133886: ``perhaps sometimes the linear algebra just doesn't work out''). Tao also observed (485146097) that since the targets have one variable, the base may be taken one-generated, and conjectured (485148288) that the only nontrivial one-generated 1518-magma satisfying the four targets is the cyclic shift $x\op y=y+1$ on $\Z/3$.
+
+\section{Statement}
+
+\begin{theorem}\label{thm:main}
+Let $G$ be the three-element magma $x\op y = y+1$ on $\Z/3$, or the one-element magma. Let $M$ be a \emph{finite} abelian group and $\alpha,\beta\in\End(M)$ such that $(M,\alpha s+\beta t)$ satisfies 1518. Then every 1518-cocycle $f\colon G\times G\to M$ is a 47-cocycle, a 614-cocycle, an 817-cocycle and a 3862-cocycle. Consequently no extension \eqref{eq:ext} of $G$ refutes $1518\Rightarrow E'$ for $E'\in\{47,614,817,3862\}$.
+\end{theorem}
+
+\begin{corollary}\label{cor:main}
+Let $H$ be a finite 1518-magma and suppose an extension \eqref{eq:ext} of $H$ by a finite $M$ refutes $1518\Rightarrow E'$ for one of the four targets. Then $H$ contains a one-generated submagma with at least $9$ elements. Dually, the same holds for $2054 \Rightarrow 255,\,2847,\,2644,\,3456$ with the shift $x\op y=x+1$.
+\end{corollary}
+
+The corollary combines the theorem with Tao's reduction and with a census (Section~\ref{sec:verif}): up to isomorphism the one-generated 1518-magmas with at most 8 elements are the trivial magma and the $\Z/3$ shift. Section~\ref{sec:l1} removes the size bound: one-generated magmas satisfying 1518 and 3862 are trivial or the shift in any size, and the obstruction becomes unconditional for finite bases (Theorem~\ref{thm:full}).
+
+\section{Proof of Theorem~\ref{thm:main}}
+
+\paragraph{Step 1: the finite-fibre ring.}
+Expanding 1518 on the linear magma $s\op t=\alpha s+\beta t$ and comparing the coefficients of $x$ and $y$ gives the identities in $\End(M)$
+\begin{equation}\label{eq:ids}
+\beta\alpha+\beta^{3}=1, \qquad \alpha^{2}+\alpha\beta+\beta^{2}\alpha=0 .
+\end{equation}
+The first reads $\beta(\alpha+\beta^{2})=1$, so $\beta$ is surjective; $M$ is finite, hence $\beta$ is bijective and $\alpha+\beta^{2}=\beta^{-1}$, i.e.\ $\alpha=\beta^{-1}-\beta^{2}$. In particular $\alpha$ commutes with $\beta$. Substituting into the second identity and multiplying by $\beta^{2}$ yields
+\[
+\beta^{5}+\beta^{3}-\beta^{2}-1 = (\beta^{2}+1)(\beta^{3}-1) = 0 .
+\]
+Conversely, these two facts imply \eqref{eq:ids}. Finiteness of $M$ is used only here, to pass from ``surjective'' to ``bijective''; everything below holds verbatim for any abelian group $M$ on which $\beta$ is injective. Therefore $M$ is a module over the commutative ring
+\begin{equation}\label{eq:R}
+R \;=\; \Z[b]\big/\bigl(b^{5}+b^{3}-b^{2}-1\bigr), \qquad a := b^{4}-b \;=\; b^{-1}-b^{2},\quad b^{-1}=b^{4}+b^{2}-b,
+\end{equation}
+via $b\mapsto\beta$, and then $a\mapsto\alpha$. $R$ is free of rank 5 over $\Z$, and every $R$-module is an admissible fibre. Over an integral domain this recovers Nielsen's classification (485154828): $\alpha=0,\ \beta^{3}=1$, or $\beta=1-\alpha,\ \alpha^{2}-2\alpha+2=0$.
+
+\paragraph{Step 2: cocycle conditions over $R$.}
+For any word $w$, the fibre component of $w$ in the extension is $\sum_i P_{w,i}(a,b)\,s_i+\sum Q(a,b)\,f(\cdot,\cdot)$, the sum running over the non-variable subterms (blueprint). The linear magma over $R$ satisfies 1518 and each of the four targets (the coefficient polynomials $P$ of both sides agree in $R$; checked), so the $s_i$ terms cancel and the $E$-cocycle condition is a matrix $D_E$ over $R$ acting on the nine unknowns $f_{xy}=f(x,y)$. For every $R$-module $M$, $Z^{2}_{E}(G,M)=\ker(D_E\colon M^{9}\to M^{k})$.
+
+Writing indices modulo 3, the 1518 condition at the base pair $(x,y)$ is
+\begin{equation}\label{eq:c1518}
+(b^{4}-b)\,f_{yy} \;+\; b^{2}f_{yx} \;+\; b\,f_{x,\,x+1} \;+\; f_{y+1,\,x+2} \;=\; 0 ,
+\end{equation}
+nine equations (when $x=y$ the first two terms merge into $(b^{4}-b+b^{2})f_{xx}$). The target conditions at $x$ are
+\begin{align}
+\Eq{47}:&\quad b^{2}f_{xx}+b\,f_{x,x+1}+f_{x,x+2}=0, \label{eq:c47}\\
+\Eq{614}:&\quad (b-b^{4})f_{xx}+b\,f_{x,x+1}+f_{x,x+2}+b^{2}f_{x+1,\,x}=0,\\
+\Eq{817}:&\quad (1+b^{2}-b^{3})f_{xx}+f_{x,x+2}+b\,f_{x+1,x+1}=0,\\
+\Eq{3862}:&\quad b^{3}f_{xx}+(b-b^{4})f_{x,x+1}-f_{x+2,\,x}=0 .
+\end{align}
+
+\paragraph{Step 3: containment by certificate.}
+For each target $E'$ there is a $3\times 9$ matrix $C_{E'}$ over $R$ with $C_{E'}\,D_{1518}=D_{E'}$ entrywise in $R$. Then $D_{1518}f=0$ implies $D_{E'}f=C_{E'}D_{1518}f=0$ for every $R$-module $M$, which is the theorem. Writing $r_{xy}$ for the 1518 row \eqref{eq:c1518} at $(x,y)$, the 47 row \eqref{eq:c47} at $x=0$ is
+\begin{equation}\label{eq:cert}
+D_{47}(0) \;=\; r_{00} \;+\; (b-b^{2}-b^{4})\,r_{11} \;+\; (-1+b+b^{3})\,r_{20}.
+\end{equation}
+The full certificates have 15 to 18 nonzero entries per target; they are listed in the accompanying file \texttt{l2\_certificate\_3.json}, and the one-element base has $1\times1$ certificates in \texttt{l2\_certificate\_1.json}.
+
+\begin{remark}
+The certificates were found, not guessed. Over the rank-5 ring the $R$-span of the nine 1518 rows is a $\Z$-lattice of rank 35 in $\Z^{45}$, and membership of the target rows was decided by integer row reduction. Containment for all $R$-modules is in fact \emph{equivalent} to this lattice containment (take $M=R^{9}/\operatorname{rowspan}D_{1518}$ and a finite quotient), so a failure would have produced an explicit finite countermodel. As a by-product, $Z^{2}_{1518}(G,M)$ has $R$-rank 2, and all of it consists of target cocycles.
+\end{remark}
+
+\section{The stronger statement: $H^{2}$ vanishes}\label{sec:h2}
+
+Theorem~\ref{thm:main} is a corollary of a cleaner fact. A \emph{coboundary} is a function of the form $f(x,y)=g(x\op y)-\alpha g(x)-\beta g(y)$ for some $g\colon G\to M$; coboundaries are cocycles for every law, and an extension by a coboundary is isomorphic to the direct product via $(x,s)\mapsto(x,\,s+g(x))$ (blueprint, cohomology chapter). Let $E\colon M^{3}\to M^{9}$ be the coboundary map $g\mapsto\bigl(g(y+1)-\alpha g(x)-\beta g(y)\bigr)_{x,y}$, a $9\times 3$ matrix over $R$.
+
+\begin{theorem}\label{thm:h2}
+For the $\Z/3$ shift $G$ and every finite abelian group $M$ with $\alpha,\beta$ as in Theorem~\ref{thm:main}, every 1518-cocycle $G\times G\to M$ is a coboundary: $H^{2}_{1518}(G,M)=0$. Consequently every extension \eqref{eq:ext} of $G$ by such a fibre that satisfies 1518 is isomorphic to the direct product $G\times(M,\alpha s+\beta t)$, and satisfies every law that both factors satisfy.
+\end{theorem}
+
+\begin{proof}
+There are matrices $P$ ($3\times 9$, two nonzero entries) and $Q$ ($9\times 9$) over $R$ with
+\begin{equation}\label{eq:homotopy}
+E\,P+Q\,D_{1518}=I_{9}\qquad\text{entrywise in }R .
+\end{equation}
+If $D_{1518}f=0$ then $f=EPf+QD_{1518}f=E(Pf)$, a coboundary, for every $R$-module $M$. The matrices are in \texttt{h2\_certificate.json}; identity \eqref{eq:homotopy} is re-verified by multiplication in $R$ and kernel-checked in \texttt{H2Cert.lean}.
+\end{proof}
+
+Theorem~\ref{thm:main} follows: the shift and every finite linear 1518-magma satisfy 47, 614, 817 and 3862, so their direct products do, so every extension does. The same argument gives the conclusion for \emph{any} law satisfied by the shift and by all finite linear 1518-magmas.
+
+Three checks and one contrast. At every root $r$ of $b^{5}+b^{3}-b^{2}-1$ in $\F_p$, $p\le47$, one finds $\dim Z^{2}_{1518}=\dim B^{2}=2$. Over the non-field fibre $\Z/4$ with $\beta=1$, brute force gives 16 cocycles and 16 coboundaries. The one-element base behaves differently: there $H^{2}$ can be nonzero (for $M=\Z/3$, $\beta=1$, $\alpha=0$ every constant is a cocycle and no nonzero constant is a coboundary), yet the containment of Theorem~\ref{thm:main} still holds by its own certificate. Finally, for $879$ over the affine base $3x+y+1 \bmod 6$ with fibre $\Z/2$, $\alpha=\beta=1$, one finds $\dim Z^{2}=7$, $\dim B^{2}=5$, so $\dim H^{2}=2$: that is the room the method used to produce the 12-element model, and it is absent for 1518 over the shift.
+
+\section{Consequences, and where the obstruction ends}\label{sec:cons}
+
+\paragraph{The exact set of unreachable non-implications.} By Theorem~\ref{thm:h2}, a constant-coefficient 1518-extension of the shift satisfies every law $E'$ that holds in the shift and in every finite linear 1518-magma; the second condition is decided once and for all in $R$ (the coefficient polynomials of $E'$ agree in $R$). Reading the row of 1518 in the ETP's closed finite implication graph (\texttt{finite\_graph.json}, fetched 2026-09-04): 1518 has 5 finite implications and 4689 finite non-implications, none unknown. Of the non-implications, 4347 are refuted by the shift itself, 329 by some finite linear 1518-magma on its own, and exactly
+\[
+13:\qquad 47,\ 65,\ 375,\ 614,\ 632,\ 679,\ 817,\ 872,\ 879,\ 1491,\ 3862,\ 3915,\ 4118
+\]
+are unreachable by every constant-coefficient extension of the shift: four one-variable laws (the targets) and nine two-variable laws. As a control, all 5 finite implications pass both checks. For the nine two-variable laws the statement is about this base only; the reduction to one-generated bases behind Corollary~\ref{cor:main} needs a one-variable target.
+
+\paragraph{The census, twice.} Corollary~\ref{cor:main} rests on the claim that the only one-generated 1518-magmas with at most 8 elements are the trivial one and the shift. Two independent tools agree: Mace4 (complete labelled enumeration at sizes 2--4, complete up to isomorphism at 5--7) and z3 with a direct reachability encoding of ``generated by one element'' (satisfiable only at size 3, where it returns the shift; unsatisfiable at sizes 2 and 4 to 8). The two tools also agree on the labelled counts 1, 6, 54, 1500 at sizes 2 to 5. Sizes 2 to 8 are moreover Lean theorems: the same encoding, discharged by \texttt{bv\_decide}, whose trust rests on Lean's verified LRAT checker run natively (Section~\ref{sec:verif}).
+
+\paragraph{The ETP witness is an extension of the shift with base-dependent coefficients.} The 15-element table \texttt{Refutation939} has a unique nontrivial congruence, with three classes of five elements, and its quotient is isomorphic to the $\Z/3$ shift. Labelling each class by $\Z/5$ (the labelling is unique up to an affine relabelling of each fibre) writes the operation as
+\[
+(x,s)\op(y,t)=\bigl(y+1,\ \alpha_{x,y}\,s+\beta_{x,y}\,t+c_{x,y}\bigr),
+\]
+with, for rows $x=0,1,2$ and columns $y=0,1,2$,
+\[
+(\alpha_{x,y},\beta_{x,y},c_{x,y})=
+\begin{pmatrix}(2,4,0)&(2,3,2)&(4,1,2)\\(4,2,0)&(2,4,0)&(1,4,2)\\(1,3,4)&(4,2,0)&(1,2,1)\end{pmatrix}.
+\] The coefficients take the values $\alpha_{x,y}\in\{1,2,4\}$, $\beta_{x,y}\in\{1,2,3,4\}$ and change with the base pair. This is exactly the general form of the blueprint's Lemma ``No counterexamples via linear extension'' for 677, with the shift as base. By Theorem~\ref{thm:h2} no relabelling can make the coefficients constant. So the line is sharp: over the $\Z/3$ shift, constant coefficients give only direct products, while base-dependent coefficients give the ETP's minimal countermodel. For 677 the obstruction survives base-dependent coefficients (Tao, June 2025); for 1518 over the shift it does not.
+
+\section{The one-generated bases are classified}\label{sec:l1}
+
+The census left open what happens above size 8. It does not stay open. Write $S(x)=x\op x$.
+
+\begin{theorem}\label{thm:closure}
+In every magma satisfying 1518 and 3862, for every $x$ and all $u,v$ in the set $\{x,\ S(x),\ S(S(x))\}$ one has $u\op v=S(v)$, and $S(S(S(x)))=x$. Consequently the set is closed under $\op$, carries the multiplication table of the cyclic shift, has one element or three, and every one-generated magma satisfying 1518 and 3862 is the trivial magma or the $\Z/3$ shift.
+\end{theorem}
+
+Vampire 5.1.0 found equational proofs of these nine equalities in milliseconds from 1518 and 3862 alone, by superposition and demodulation (9 to 32 proof lines each, \texttt{atp/eq\_*.proof}); they were transcribed into core Lean 4.33.1 (\texttt{lean/OneGenerated1518.lean}): the table and the closure of words in $x$ are proved with no axioms at all, and the one-or-three-elements statement with \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound} only. The classification therefore needs neither finiteness nor the SAT census. This is Tao's conjecture of 2024-11-29 in a stronger form: without finiteness and with one target instead of four. The target cannot be dropped: \texttt{Refutation939} is a one-generated 1518-magma with 15 elements, and it violates 3862 (60 of its 135 closure products leave the set). As a control, on all 41\,319 six-element 1518-magmas the largest one-generated submagma has 3 elements.
+
+Vampire also shows that under 1518 together with left injectivity and left surjectivity, which hold in every finite 1518-magma, the four targets 47, 614, 817, 3862 are pairwise equivalent (twelve theorems), and that equationally 3862 implies the other three. Hence:
+
+\begin{theorem}[full obstruction, finite bases]\label{thm:full}
+Let $H$ be a finite 1518-magma, $M$ a finite abelian group with $\alpha,\beta$ making $\alpha s+\beta t$ a 1518-magma, and $f$ a 1518-cocycle on $H$. If the extension $H\times_f M$ violates one of 47, 614, 817, 3862, then $H$ already violates it.
+\end{theorem}
+
+\begin{proof}
+If $H$ satisfies the target then, being finite, it satisfies 3862; by Theorem~\ref{thm:closure} every one-generated submagma $\langle x\rangle$ is trivial or the shift; a violation at $(x,s)$ would live in the sub-extension over $\langle x\rangle$, which satisfies the four targets by Theorems~\ref{thm:main} and~\ref{thm:h2}.
+\end{proof}
+
+So constant-coefficient abelian cohomology never refutes any of these four implications from any finite base. Non-vanishing $H^{2}$ over other bases is real: $H^{2}_{1518}$ is nonzero for the right projection on two elements and for every 1518-base of sizes 4 and 5, and such extensions do refute two-variable laws ($1518\Rightarrow 632$ and $1518\Rightarrow 879$ at carrier 6, from the base $[[0,1,2],[0,1,2],[1,0,2]]$ with fibre $\Z/2$), but by Theorem~\ref{thm:full} they cannot touch the one-variable targets. The remaining prose in this section is the finite-base equivalence of the four targets and the assembly of Theorem~\ref{thm:full}.
+
+\section{Verification status}\label{sec:verif}
+
+\begingroup\small
+\begin{longtable}{p{0.46\textwidth} p{0.48\textwidth}}
+\toprule
+Layer & Status \\
+\midrule
+\endfirsthead
+\toprule
+Layer (continued) & Status \\
+\midrule
+\endhead
+Certificate identities $C\,D_{1518}=D_{E'}$ in $R$ & Lean 4.33.1 kernel, \texttt{decide} on integer coefficient lists, file \texttt{L2Cert.lean}; axioms: \texttt{propext} only \\
+Homotopy identity $EP+QD_{1518}=I_9$ in $R$ (Theorem~\ref{thm:h2}) & Lean 4.33.1 kernel, file \texttt{H2Cert.lean}; axioms: \texttt{propext} only; also re-multiplied in Python \\
+$H^{2}=0$ numerically & $\dim Z^{2}=\dim B^{2}=2$ at all 39 prime specialisations; $\Z/4$, $\beta=1$: 16 cocycles, 16 coboundaries \\
+Same identities & re-multiplication in $R$ in Python \\
+Rows \eqref{eq:c1518}--\eqref{eq:c47} are the cocycle conditions; $R$ is the finite-fibre ring & written argument above; not formalized. Independently re-derived by a second program with noncommutative coefficients (words in $\alpha,\beta$), specialised to $R$ only at the end: the identities \eqref{eq:ids} and all rows agree exactly \\
+One-generated classification (Theorem~\ref{thm:closure}) & core Lean 4.33.1, \texttt{lean/OneGenerated1518.lean}: \texttt{table}, \texttt{words\_in\_T} with no axioms; \texttt{one\_or\_three} with the three standard axioms; transcribed from Vampire's equational proofs \\
+Target equivalences under 1518, finite bases & Vampire 5.1.0: twelve theorems with left-quasigroup axioms; equationally $3862\Rightarrow47,614,817$; not in Lean \\
+Unreachable set of Section~\ref{sec:cons} & ETP \texttt{finite\_graph.json} (sha256 \texttt{d609274e\ldots}), row 1518 decoded; control: the 5 finite implications pass the shift and $R$ checks \\
+Structure of \texttt{Refutation939} & exhaustive search over labellings of its three classes by $\Z/5$; $20^{3}$ labellings give base-dependent affine form, none constant (Theorem~\ref{thm:h2} forbids it) \\
+Numeric cross-check & at every root $r$ of $b^{5}+b^{3}-b^{2}-1$ in $\F_p$, $p\le 47$ (39 cases), fibre $\Z/p$, $\beta=r$, $\alpha=r^{4}-r$: $\dim Z^{2}_{1518}=2$ and contained in each target space, by an independent numeric implementation \\
+Control & law 359, which 1518 implies universally, is contained with a certificate; law 3 (idempotence) is not satisfied by the linear magma over $R$, as expected \\
+Method check & the same computation over the affine base $3x+y+1 \bmod 6$ with fibre $\Z/2$ reproduces the 12-element $879\not\Rightarrow4065$ model \\
+Census for Corollary~\ref{cor:main} & Mace4 2009-11A; sizes 2--4 complete labelled enumeration (audited against plain enumeration at sizes 2, 3), sizes 5--7 complete up to isomorphism (audited at size 4): one-generated classes at size 3: one (the shift); at sizes 4--7: none, out of 54, 632, 41\,319, 8\,393\,390 models. Independently: z3 4.16, reachability encoding, sat only at size 3; labelled counts 1, 6, 54, 1500 at sizes 2--5 agree between the tools; z3 also gives unsat at size 8 (532\,s). All enumerated 1518-magmas of size $\le 7$ satisfy 47, 614, 817, 3862 \\
+Census, Lean-checked & \texttt{census\_lean/Census1518\_n.lean}, $n=2,\dots,8$: bitvector encoding of the table, the law at every pair and the reachability chain from an arbitrary generator; proved by \texttt{bv\_decide} (bundled CaDiCaL, LRAT proof checked by Lean's verified checker run natively; recorded as the per-theorem axiom \texttt{\_native.bv\_decide.ax}, the \texttt{native\_decide} trust model, outside the lab's allowlist). Size 3 is proved to be exactly the two labelled copies of the shift. Each file also carries encoding controls proved by kernel \texttt{decide} with no axioms: a genuine 1518 table of that size satisfies every encoded law hypothesis, and at size 3 the shift with generator 0 satisfies the reachability chain with \texttt{full = true}. The controls exist because a first size-8 file was vacuous ($8\#3$ wraps to $0\#3$, so its range hypotheses were false); the corrected size-8 file omits ranges, and its main theorem carries the SAT axiom like the others. Compile times 0.5\,s to 68\,s for sizes 2 to 7, 7:24.45 for size 8. \texttt{CensusBridge.lean} restates size 2 for functions $\mathrm{Fin}\,2\to\mathrm{Fin}\,2\to\mathrm{Fin}\,2$ and proves it by kernel \texttt{decide} with no native evaluation \\
+\bottomrule
+\end{longtable}
+\endgroup
+
+A Lean proof of Theorems~\ref{thm:main} and~\ref{thm:h2} themselves would need the extension defined generically, the derivation of the rows from the law terms, and Step 1. None of that is done.
+
+\section{Scope and prior art}
+
+Not covered: bases with a one-generated submagma of 9 or more elements; coefficients $\alpha_{x,y},\beta_{x,y}$ varying with the base pair, which Section~\ref{sec:cons} shows do reach the targets over this very base; iterated extensions; fibres on which $\beta$ is not injective.
+
+No statement of Theorem~\ref{thm:main} was found in the pinned ETP blueprint, paper, commentary or Lean sources, in the Lean Zulip \emph{Equational} stream, in the SAIR Foundation Zulip, or on arXiv (searches dated 4 September 2026). What exists is the empirical record above. Originality is therefore unresolved, not claimed.
+
+\section{Questions}
+
+\begin{enumerate}
+\item Is the vanishing $H^{2}_{1518}(\Z/3\text{ shift}, M)=0$ for all finite 1518-fibres, or the resulting containment, already known or written down somewhere?
+\item Has the conjecture of 485148288 been settled beyond a census? With it, Corollary~\ref{cor:main} would say that constant-coefficient cohomology can never refute these implications from any finite base.
+\item Over the shift the obstruction does \emph{not} survive base-dependent coefficients: \texttt{Refutation939} is such an extension. Has the cohomology with base-dependent coefficients (abelian objects in the slice category, in Bolan's phrasing) been computed for the shift, so that the 15-element models are the generic case of something?
+\end{enumerate}
+
+\section{Reproduction}\label{sec:repro}
+
+Standard-library Python, Mace4 and Lean 4.33.1; inputs pinned by commit. Outputs as run are recorded alongside the scripts.
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item \texttt{fetch\_inputs.sh}: pinned ETP law list and refutation tables; Parsimagma's uncovered-pairs file.
+\item \texttt{run\_mace4.sh}, \texttt{monogenic\_1518.py}: the census behind Corollary~\ref{cor:main}.
+\item \texttt{l2\_symbolic.py}: the ring, the cocycle rows, the lattice containment, the numeric cross-check; run once for each base.
+\item \texttt{l2\_symbolic.py}, \texttt{h2\_vanishing.py}: the certificates for Theorems~\ref{thm:main} and~\ref{thm:h2}; \texttt{L2Cert.lean}, \texttt{H2Cert.lean}: their kernel checks.
+\item \texttt{rederive\_rows.py}: independent noncommutative re-derivation of the rows.
+\item \texttt{z3\_census.py}: the census with z3.
+\item \texttt{unreachable\_set.py}: the 13 laws from the ETP finite graph.
+\item \texttt{witness939\_varying.py}: the structure of \texttt{Refutation939}.
+\item \texttt{gen\_census\_lean.py}, \texttt{census\_lean/}: the Lean census proofs and their README.
+\end{itemize}
+
+\end{document}

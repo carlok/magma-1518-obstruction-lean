@@ -1,0 +1,106 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Detected formulas, will run a generic FOF schedule.
+% WARNING: time unlimited strategy and instruction limiting not in place - attempting to translate instructions to time
+% % WARNING: option sil not known.
+% % WARNING: option i not known.
+% lrs+1011_32_tgt=full:alpa=true:random_seed=3607951011:st=5:sd=1:ss=included:er=filter_1 on eq_sx_ssx for (1ds)
+%  found proof, printing to "/var/folders/ck/62d1gdw96rxcy99d6wrj4r5m0000gn/T/vampire-proof-56541-56542"...
+% ...printing done.
+% Refutation found. Thanks to Tanya!
+% SZS status Theorem for eq_sx_ssx
+% SZS output start Proof for eq_sx_ssx
+fof(f1,axiom,(
+  ! [X0,X1] : X0 = m(m(X1,X1),m(X0,m(X1,X0)))),
+  file('eq_sx_ssx.p','e1518')).
+fof(f2,axiom,(
+  ! [X0] : m(X0,X0) = m(m(X0,m(X0,X0)),X0)),
+  file('eq_sx_ssx.p','e3862')).
+fof(f3,conjecture,(
+  ! [X0] : (m(m(X0,X0),m(m(X0,X0),m(X0,X0))) = X0 | m(m(X0,X0),m(m(X0,X0),m(X0,X0))) = m(X0,X0) | m(m(X0,X0),m(m(X0,X0),m(X0,X0))) = m(m(X0,X0),m(X0,X0)))),
+  file('eq_sx_ssx.p','c')).
+fof(f4,negated_conjecture,(
+  ~ ! [X0] : (m(m(X0,X0),m(m(X0,X0),m(X0,X0))) = X0 | m(m(X0,X0),m(m(X0,X0),m(X0,X0))) = m(X0,X0) | m(m(X0,X0),m(m(X0,X0),m(X0,X0))) = m(m(X0,X0),m(X0,X0)))),
+  inference(negated_conjecture,[status(cth)],[f3])).
+fof(f5,plain,(
+  ? [X0] : (m(m(X0,X0),m(m(X0,X0),m(X0,X0))) != X0 & m(X0,X0) != m(m(X0,X0),m(m(X0,X0),m(X0,X0))) & m(m(X0,X0),m(X0,X0)) != m(m(X0,X0),m(m(X0,X0),m(X0,X0))))),
+  inference(ennf_transformation,[],[f4])).
+fof(f6,plain,(
+  sK0 != m(m(sK0,sK0),m(m(sK0,sK0),m(sK0,sK0))) & m(sK0,sK0) != m(m(sK0,sK0),m(m(sK0,sK0),m(sK0,sK0))) & m(m(sK0,sK0),m(sK0,sK0)) != m(m(sK0,sK0),m(m(sK0,sK0),m(sK0,sK0)))),
+  inference(skolemize,[status(esa),new_symbols(skolem,[sK0]),skolemize(X0,sK0)],[f5])).
+fof(f7,plain,(
+  ( ! [X0,X1] : (m(m(X1,X1),m(X0,m(X1,X0))) = X0) )),
+  inference(cnf_transformation,[],[f1])).
+fof(f8,plain,(
+  ( ! [X0] : (m(X0,X0) = m(m(X0,m(X0,X0)),X0)) )),
+  inference(cnf_transformation,[],[f2])).
+fof(f11,plain,(
+  sK0 != m(m(sK0,sK0),m(m(sK0,sK0),m(sK0,sK0)))),
+  inference(cnf_transformation,[],[f6])).
+fof(f12,definition,(
+  sF1 = m(sK0,sK0)),
+  introduced(definition,[new_symbols(definition,[sF1])],[function_definition])).
+fof(f13,plain,(
+  m(sK0,sK0) = sF1),
+  inference(reorient_equations,[],[f12])).
+fof(f14,definition,(
+  sF2 = m(sF1,sF1)),
+  introduced(definition,[new_symbols(definition,[sF2])],[function_definition])).
+fof(f15,plain,(
+  m(sF1,sF1) = sF2),
+  inference(reorient_equations,[],[f14])).
+fof(f16,definition,(
+  sF3 = m(sF1,sF2)),
+  introduced(definition,[new_symbols(definition,[sF3])],[function_definition])).
+fof(f17,plain,(
+  m(sF1,sF2) = sF3),
+  inference(reorient_equations,[],[f16])).
+fof(f18,plain,(
+  sK0 != sF3),
+  inference(definition_folding,[],[f11,f17,f15,f13,f13,f13])).
+fof(f21,plain,(
+  ( ! [X0] : (m(sF1,m(X0,m(sK0,X0))) = X0) )),
+  inference(superposition,[],[f7,f13])).
+fof(f23,plain,(
+  sK0 = m(sF1,m(sK0,sF1))),
+  inference(superposition,[],[f7,f13])).
+fof(f27,plain,(
+  ( ! [X0] : (m(X0,X0) = m(m(X0,X0),X0)) )),
+  inference(superposition,[],[f7,f7])).
+fof(f64,plain,(
+  sF1 = m(m(sK0,sF1),sK0)),
+  inference(superposition,[],[f8,f13])).
+fof(f97,plain,(
+  sK0 = m(m(m(sK0,sF1),m(sK0,sF1)),m(sK0,sF1))),
+  inference(superposition,[],[f7,f64])).
+fof(f98,plain,(
+  sK0 = m(m(sK0,sF1),m(sK0,sF1))),
+  inference(forward_demodulation,[],[f97,f27])).
+fof(f100,plain,(
+  sK0 = m(sK0,m(sK0,sF1))),
+  inference(superposition,[],[f27,f98])).
+fof(f104,plain,(
+  m(sK0,sF1) = m(sF1,m(m(sK0,sF1),sK0))),
+  inference(superposition,[],[f21,f100])).
+fof(f107,plain,(
+  m(sF1,sF1) = m(sK0,sF1)),
+  inference(forward_demodulation,[],[f104,f64])).
+fof(f109,plain,(
+  sF2 = m(sK0,sF1)),
+  inference(forward_demodulation,[],[f107,f15])).
+fof(f115,plain,(
+  sK0 = m(sF1,sF2)),
+  inference(superposition,[],[f23,f109])).
+fof(f120,plain,(
+  sK0 = sF3),
+  inference(forward_demodulation,[],[f115,f17])).
+fof(f124,plain,(
+  $false),
+  inference(forward_subsumption_resolution,[],[f120,f18])).
+% SZS output end Proof for eq_sx_ssx
+% ------------------------------
+% Version: Vampire 5.1.0 (Release build, commit )
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.001 s
+% Peak memory usage: 5 MB
+% Success in time 0.003 s

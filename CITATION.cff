@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+title: "magma-1518-obstruction-lean: one-generated (1518 + 3862)-magmas are trivial or the Z/3 shift, and constant-coefficient magma cohomology cannot refute 1518 => 47, 614, 817, 3862"
+message: "If you use this work, please cite it as below."
+type: software
+authors:
+  - family-names: Perassi
+    given-names: Carlo
+license: Apache-2.0
+date-released: 2026-09-05
+url: https://github.com/carlok/magma-1518-obstruction-lean
+abstract: >-
+  Lean 4 (core, no axioms) proof that in any magma satisfying ETP laws 1518 and 3862 the set {x, x*x, (x*x)*(x*x)}
+  carries the multiplication table of the cyclic shift, so one-generated such magmas are trivial or the Z/3 shift
+  (a conjecture of T. Tao, Nov 2024, in a stronger form); kernel-checked certificates that every 1518-cocycle over
+  the shift with finite fibre is a coboundary; hence constant-coefficient abelian extensions of finite 1518-magmas
+  never refute 1518 => 47, 614, 817, 3862. Automated proofs by Vampire, census by Mace4, z3 and Lean bv_decide.

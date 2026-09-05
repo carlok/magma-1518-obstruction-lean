@@ -1,0 +1,6 @@
+assign(max_models, -1).
+clear(lnh).
+assign(max_seconds, 600).
+formulas(assumptions).
+x = ((x * x) * (y * x)) * y.
+end_of_list.

@@ -1,0 +1,11 @@
+# fetched ETP inputs and regenerated outputs (reproduce with scripts/fetch_inputs.sh and the scripts)
+data/etp/
+data/pm/
+data/m4/
+data/*.json
+!data/control_tables.json
+*.olean
+*.ilean
+.lake/
+__pycache__/
+.DS_Store
