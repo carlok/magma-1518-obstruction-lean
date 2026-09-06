@@ -19,3 +19,4 @@ Standard-library Python 3 unless noted. `data` is the directory created by `fetc
 | `family_vs_fifteen.py` | isomorphism of the two refuting classes over `F₅` with Le Floch's models 5 and 6 (needs his `1518-anti-47-models-size-15.jsonl` in `data/fifteen/`, Zulip message 547744137, not redistributed) | |
 | `family_more_fibres.py`, `family_squaring_morphism.py`, `squaring_orders.py` | brute force over `F₉` and `Z/25`; squaring as an endomorphism; squaring cycle types of Mace4 models | Mace4 for the last |
 | `gen_family_lean.py` | generates `lean/FamilyF<p>.lean` from `data/fifteen/family_Qi.json` | |
+| `gen_palomar.py` | generates `Challenge.lean`, `Solution.lean` and `comparator.json` (the Palomar pair) from `data/etp/equations.txt` and `data/fifteen/family_Qi.json` | |

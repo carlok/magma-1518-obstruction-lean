@@ -1,8 +1,8 @@
 #!/bin/sh
-# Re-check every Lean file. Requires elan with leanprover/lean4:v4.33.1 (see lean-toolchain).
+# Re-check every Lean file. Requires elan with leanprover/lean4:v4.33.0 (see lean-toolchain).
 set -e
 cd "$(dirname "$0")"
-LEAN="$(lean +v4.33.1 --print-prefix)/bin/lean"
+LEAN="$(lean +v4.33.0 --print-prefix)/bin/lean"
 for f in lean/OneGenerated1518.lean lean/L2Cert.lean lean/H2Cert.lean lean/FamilyF5.lean lean/FamilyF13.lean lean/census/CensusBridge.lean; do
   echo "== $f"; "$LEAN" -M 8192 "$f" | grep -E "axioms|error"
 done

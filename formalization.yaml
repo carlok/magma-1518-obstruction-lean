@@ -1,0 +1,237 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# formalization.yaml v0.4 with the Palomar registry's provenance fields.
+version: "v0.4"
+
+project:
+  name: "One-generated (1518 + 3862)-magmas are trivial or the Z/3 shift; an explicit family of finite 1518-magmas violating laws 47, 614, 817, 3862"
+  description: >-
+    Lean 4 results (core Lean, no dependencies, no axioms beyond the standard three) about law 1518 of the Equational
+    Theories Project, x = (y ◇ y) ◇ (x ◇ (y ◇ x)). Theorem A: in every magma satisfying 1518 and 3862
+    (x ◇ x = (x ◇ (x ◇ x)) ◇ x), writing S x = x ◇ x, the set {x, S x, S (S x)} is closed under ◇ with u ◇ v = S v and
+    S (S (S x)) = x; hence every one-generated such magma is the trivial magma or the three-element cyclic shift
+    x ◇ y = y + 1. This proves, in a stronger form (one target law instead of four, no finiteness), a conjecture stated
+    by Terence Tao on the Lean Zulip on 2024-11-29. Theorem F, two members formalized: for any commutative ring R with
+    1/2 and an element i with i² = −1, and any nonzero R-module M, an explicit table on Z/3 × M with coefficients in
+    Z[i, 1/2] satisfies 1518 and violates 47, 614, 817 and 3862, with squaring map of order 12; the members over F_5
+    (15 elements) and F_13 (39 elements), defined by their coefficient matrices, are checked by kernel evaluation.
+    Outside the compared declarations the repository holds kernel-checked certificate identities behind a cohomological
+    obstruction theorem (every 1518-cocycle over the shift with finite fibre is a coboundary), whose reduction is a
+    written proof, and the computations classifying base-dependent extensions of the shift.
+  authors:
+    - "Carlo Perassi"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Carlo Perassi"
+
+classification:
+  arxiv: ["math.RA", "math.LO"]
+  msc2020: ["20N02", "08B05", "03C05", "68V20"]
+
+sources:
+  - title: "One-generated magmas satisfying laws 1518 and 3862 are trivial or the Z/3 shift; an explicit family of finite 1518-magmas violating 47, 614, 817, 3862 (Theorems 4 and 6 of paper/l2_note.pdf in this repository)"
+    type: original-proof
+    relationship: other
+    location: "https://github.com/carlok/magma-1518-obstruction-lean, paper/l2_note.pdf"
+    note: >-
+      First presentation is this repository and its note. Novelty is unknown: the pinned Equational Theories Project
+      repository (blueprint, paper, commentary, Lean sources), the Lean Zulip Equational stream, the SAIR Foundation
+      Zulip, arXiv and the Palomar registry were searched in September 2026 without finding either statement; Theorem A
+      is a short equational fact and may be folklore. The 15-element member of Theorem F is isomorphic to a countermodel
+      already in the Equational Theories Project (see related_formalizations); the 39-element member and the family are
+      not found elsewhere.
+  - title: "Austin pairs: conjecture that finite one-generated magmas satisfying 1518, 47, 614, 817 and 3862 are trivial or the Z/3 shift (Lean Zulip, Equational stream, message 485148288)"
+    authors:
+      - "Terence Tao"
+    type: "web discussion"
+    id: "https://leanprover.zulipchat.com/#narrow/channel/458659-Equational/topic/Austin.20pairs/near/485148288"
+    location: "https://leanprover-community.github.io/archive/stream/458659-Equational/topic/Austin.20pairs.html"
+    relationship: background
+    note: >-
+      States the conjecture that Theorem A proves. The source assumes finiteness and all four target laws; the
+      formalization assumes 3862 alone and no finiteness. Not contacted.
+    author_endorsement: not-contacted
+  - title: "The Equational Theories Project: Advancing Collaborative Mathematical Research at Scale"
+    authors:
+      - "Matthew Bolan"
+      - "Joachim Breitner"
+      - "Jose Brox"
+      - "Nicholas Carlini"
+      - "Mario Carneiro"
+      - "Floris van Doorn"
+      - "Martin Dvorak"
+      - "Andrés Goens"
+      - "Aaron Hill"
+      - "Harald Husum"
+      - "Hernán Ibarra Mejia"
+      - "Zoltan A. Kocsis"
+      - "Bruno Le Floch"
+      - "Amir Livne Bar-on"
+      - "Lorenzo Luccioli"
+      - "Douglas McNeil"
+      - "Alex Meiburg"
+      - "Pietro Monticone"
+      - "Pace P. Nielsen"
+      - "Emmanuel Osalotioman Osazuwa"
+      - "Giovanni Paolini"
+      - "Marco Petracci"
+      - "Bernhard Reinke"
+      - "David Renshaw"
+      - "Marcus Rossel"
+      - "Cody Roux"
+      - "Jérémy Scanvic"
+      - "Shreyas Srinivas"
+      - "Anand Rao Tadipatri"
+      - "Terence Tao"
+      - "Vlad Tsyrklevich"
+      - "Fernando Vaquerizo-Villar"
+      - "Daniel Weber"
+      - "Fan Zheng"
+    type: paper
+    id: "arXiv:2512.07087"
+    location: "https://arxiv.org/abs/2512.07087"
+    relationship: background
+    note: "Law numbering, the finite implication graph and the magma cohomology method; the laws in Challenge.lean are generated from the project's equations file at commit 88088faaccfaa05f268cf4d007ceb5286630ba24."
+    author_endorsement: not-contacted
+  - title: "Shrinking the size-232 magma for law 1518 to size 15 (Lean Zulip, Equational stream, October 2025)"
+    authors:
+      - "Bruno Le Floch"
+      - "Jose Brox"
+    type: "web discussion"
+    id: "https://leanprover-community.github.io/archive/stream/458659-Equational/topic/Shrinking.20the.20size-232.20magma.20for.20law.201518.20to.20size.2015.html"
+    location: "https://leanprover-community.github.io/archive/stream/458659-Equational/topic/Shrinking.20the.20size-232.20magma.20for.20law.201518.20to.20size.2015.html"
+    relationship: background
+    note: >-
+      The six 15-element countermodels to 1518 ⇒ 47 (Mace4 search by Le Floch, census by Brox), and Le Floch's
+      observation that squaring and left multiplications are bijective in finite 1518-magmas. The F_5 member of
+      Theorem F is isomorphic to one of the six (scripts/family_vs_fifteen.py); their tables are not redistributed here.
+    author_endorsement: not-contacted
+
+related_formalizations:
+  - id: "https://github.com/teorth/equational_theories/blob/88088faaccfaa05f268cf4d007ceb5286630ba24/equational_theories/Generated/All4x4Tables/Refutation939.lean"
+    relationship: independent
+    note: >-
+      The Equational Theories Project's Lean-verified 15-element countermodel to 1518 ⇒ 47, 614, 817, 3862, given as a
+      lookup table. The F_5 member of Theorem F is isomorphic to it but is defined here by its coefficient matrices on
+      Z/3 × F_5, together with the 39-element member and, outside Lean, the whole family. Not a Lean dependency of this
+      project.
+
+status:
+  scope: >-
+    Formalized in the compared declarations: Theorem A for arbitrary magmas satisfying 1518 and 3862 (Magma1518.table,
+    cube, words_in_T, one_or_three) and the F_5 and F_13 members of Theorem F (Magma1518.familyF5_law1518,
+    familyF5_refutes, familyF5_squaring_order and the same three for F_13). Not formalized: Theorem F for a general ring
+    and module (verified by exact arithmetic in Q(i) outside Lean, scripts/basedep_family.py); the classification of
+    base-dependent extensions of the shift (exhaustive enumeration to p = 61 and Gröbner bases to p = 257, outside
+    Lean); the cohomological results (H² = 0 over the shift, the obstruction theorem), whose certificate identities are
+    kernel-checked in lean/L2Cert.lean and lean/H2Cert.lean but whose reduction from finite fibres to the ring is a
+    written proof; the equivalence of the four target laws in finite 1518-magmas (Vampire). The census files under
+    lean/census use bv_decide (native evaluation) and are outside every compared declaration and outside the Lake
+    libraries.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+
+automation:
+  methods:
+    - method: agent
+      models: ["Claude Fable 5.1 (Anthropic)"]
+      framework: "Claude Code"
+      tool_setup: >-
+        An AI agent working under the author's direction in interactive sessions wrote the search and verification
+        scripts, transcribed the nine equational proofs found by Vampire 5.1.0 into lean/OneGenerated1518.lean,
+        generated the finite decide-checked members and this Challenge/Solution pair (scripts/gen_palomar.py, which
+        reads the laws from the project's equations file rather than transcribing them), and drafted the notes.
+      cost:
+        wall_time: "about three days of interactive sessions, September 2026"
+        spend_usd: "subscription-based"
+        hardware: "local machine (Apple M3 Pro, 11 cores); no cloud compute"
+      prompting_notes: >-
+        Interactive direction by the author; predictions were written down before the confirming computations were run
+        (recorded in paper/L2_NOTE.md); every figure was recomputed by the author's own tooling.
+    - method: manual
+      tool_setup: >-
+        The author chose the questions, directed the literature and Zulip searches, checked every statement against
+        its source, and reviewed the Lean files and the notes.
+  spend_usd: "subscription-based"
+  notes: >-
+    Vampire 5.1.0 found the equational proofs behind Theorem A from the two laws in milliseconds; the Lean transcription
+    is a hand-readable sequence of rewrites checked by the kernel with no axioms. The finite members of Theorem F are
+    checked by kernel decide on their coefficient-matrix definitions. Mace4 2009-11A, z3 4.16.0, exact rational
+    arithmetic and sympy 1.14 (Gröbner bases) were used for the cross-checks and classifications reported in the
+    notes, outside Lean.
+
+fidelity:
+  divergences: >-
+    Theorem A is stronger than the source conjecture: it assumes 1518 and 3862 only (the conjecture assumed 47, 614,
+    817 and 3862) and no finiteness. The Lean statements express "the submagma generated by x" through an explicit
+    membership predicate inT and a word type W. Theorem F is formalized only for M = F_5 and M = F_13; the general
+    statement over a ring with a square root of −1 is not in Lean.
+
+review:
+  status: "self-assessed"
+  notes: >-
+    Statements audited by the author against the Equational Theories Project law text; the Lean law definitions are
+    generated from the project's equations file. Cross-checks outside Lean: brute force on all 1518-magmas of size at
+    most 6 for Theorem A (largest one-generated submagma has three elements); exact arithmetic in Q(i), brute force
+    over F_9 and Z/25, and an isomorphism check against Le Floch's 15-element models for Theorem F. No external review
+    has taken place; the results have not been discussed publicly at the time of this file.
+
+alignment:
+  namespace: "Magma1518"
+  statements:
+    - source: "Theorem 4 of paper/l2_note.pdf (Theorem A); Tao's conjecture, message 485148288"
+      lean: "Magma1518.table"
+      module: "Challenge"
+      status: proved
+      note: "u ◇ v = S v for all u, v in {x, S x, S (S x)}, under 1518 and 3862"
+    - source: "Theorem 4 of paper/l2_note.pdf (Theorem A)"
+      lean: "Magma1518.cube"
+      module: "Challenge"
+      status: proved
+      note: "S (S (S x)) = x, stated as (S x ◇ S x) ◇ (S x ◇ S x) = x"
+    - source: "Theorem 4 of paper/l2_note.pdf (Corollary A′)"
+      lean: "Magma1518.words_in_T"
+      module: "Challenge"
+      status: proved
+      note: "every word in x evaluates into {x, S x, S (S x)}"
+    - source: "Theorem 4 of paper/l2_note.pdf (Corollary A′)"
+      lean: "Magma1518.one_or_three"
+      module: "Challenge"
+      status: proved
+      note: "one element or three pairwise distinct elements; uses classical case analysis"
+    - source: "Theorem 6 of paper/l2_note.pdf (Theorem F), member M = F_5"
+      lean: "Magma1518.familyF5_law1518"
+      module: "Challenge"
+      status: proved
+      note: "law 1518 on the 15-element magma defined by the coefficient matrices modulo 5 with i = 2"
+    - source: "Theorem 6 of paper/l2_note.pdf (Theorem F), member M = F_5"
+      lean: "Magma1518.familyF5_refutes"
+      module: "Challenge"
+      status: proved
+      note: "laws 47, 614, 817, 3862 each fail; the element (0, 1) is a witness"
+    - source: "Theorem 6 of paper/l2_note.pdf (Theorem F), member M = F_5"
+      lean: "Magma1518.familyF5_squaring_order"
+      module: "Challenge"
+      status: proved
+      note: "S^12 = id and S^3 ≠ id on the 15-element member"
+    - source: "Theorem 6 of paper/l2_note.pdf (Theorem F), member M = F_13"
+      lean: "Magma1518.familyF13_law1518"
+      module: "Challenge"
+      status: proved
+      note: "law 1518 on the 39-element magma defined by the coefficient matrices modulo 13 with i = 5"
+    - source: "Theorem 6 of paper/l2_note.pdf (Theorem F), member M = F_13"
+      lean: "Magma1518.familyF13_refutes"
+      module: "Challenge"
+      status: proved
+      note: "laws 47, 614, 817, 3862 each fail; the element (0, 1) is a witness"
+    - source: "Theorem 6 of paper/l2_note.pdf (Theorem F), member M = F_13"
+      lean: "Magma1518.familyF13_squaring_order"
+      module: "Challenge"
+      status: proved
+      note: "S^12 = id and S^3 ≠ id on the 39-element member"
+
+acknowledgements: >-
+  Vampire 5.1.0 for the equational proofs; Mace4, z3 and sympy for the cross-checks; the Equational Theories Project
+  for the law numbering and the finite-implication data; Bruno Le Floch and Jose Brox for the 15-element countermodels;
+  Terence Tao for the conjecture. Computation, proof search, transcription and drafting were done with AI assistance
+  (Claude, Anthropic) under the author's direction.

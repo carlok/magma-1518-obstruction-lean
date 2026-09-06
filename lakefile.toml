@@ -1,0 +1,19 @@
+name = "magma1518"
+version = "0.2.0"
+defaultTargets = ["Magma1518", "Challenge", "Solution"]
+
+# The proof development: core Lean only, no dependencies.  The bv_decide census files under lean/census are not part of
+# any library (they carry a native-evaluation axiom and are checked separately by check.sh).
+[[lean_lib]]
+name = "Magma1518"
+srcDir = "lean"
+roots = ["OneGenerated1518", "FamilyF5", "FamilyF13", "L2Cert", "H2Cert"]
+
+# Palomar Challenge/Solution pair (see README, section "Palomar package").
+[[lean_lib]]
+name = "Challenge"
+roots = ["Challenge"]
+
+[[lean_lib]]
+name = "Solution"
+roots = ["Solution"]

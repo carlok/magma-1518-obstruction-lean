@@ -1,0 +1,23 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "Magma1518.table",
+    "Magma1518.cube",
+    "Magma1518.words_in_T",
+    "Magma1518.one_or_three",
+    "Magma1518.familyF5_law1518",
+    "Magma1518.familyF5_refutes",
+    "Magma1518.familyF5_squaring_order",
+    "Magma1518.familyF13_law1518",
+    "Magma1518.familyF13_refutes",
+    "Magma1518.familyF13_squaring_order"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}
