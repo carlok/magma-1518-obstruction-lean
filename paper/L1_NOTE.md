@@ -10,7 +10,7 @@ Write `S(x) = x ◇ x`. Law 1518 is `x = (y ◇ y) ◇ (x ◇ (y ◇ x))`; law 3
 
 **Corollary L1′.** In every magma satisfying 1518 and 3862, every one-generated submagma has at most 3 elements. Every one-generated magma satisfying 1518 and 3862 is, up to isomorphism, the trivial magma or the cyclic shift `x ◇ y = y + 1` on Z/3. (Lean: `one_or_three` shows `T` has one element or three distinct ones; `table` gives the shift on `T`. The census files are now corroboration only.)
 
-This is Tao's conjecture of 2024-11-29 (Lean Zulip, "Austin pairs", message 485148288), in a stronger form: no finiteness, and only one of the four target laws is needed. It is *not* true without a target: the ETP's 15-element table `Refutation939` is a one-generated 1518-magma (checked: `<g>` has 15 elements for 12 of its 15 generators), and it violates 3862.
+This is Tao's conjecture of 2024-11-29 (Lean Zulip, "Austin pairs", message 485148288), which assumed all four target laws and no finiteness. Assuming 3862 alone is equivalent, since 3862 implies the other three (Bolan, message 485153888, the same day); what is added here is the proof. It is *not* true without a target: the ETP's 15-element table `Refutation939` is a one-generated 1518-magma (checked: `<g>` has 15 elements for 12 of its 15 generators), and it violates 3862.
 
 ## 2. Proof
 
@@ -42,7 +42,7 @@ The corollary follows by induction on words: every word in `x` lies in `{x, S(x)
 
 Proof: a violation at `(x, s)` lives in the sub-extension over `<x>`, which is trivial or the shift by L1′, and over those bases every 1518-cocycle is a coboundary (or, for the trivial base, a target cocycle), so the sub-extension satisfies the targets. Hence constant-coefficient cohomology can never refute `1518 ⇒ 3862` from any base: if the extension violates 3862, the base already did.
 
-**All four targets, finite bases.** Vampire also proves (`atp/imp_*.p`, 60 s each) that under 1518 plus left injectivity and left surjectivity, which hold in every finite 1518-magma, the four targets are pairwise equivalent (all twelve implications are theorems); this re-derives Bruno Le Floch's Zulip observation of 2025-10-21 that S and all left multiplications are bijective in a finite 1518-magma and that the single-variable targets are then equivalent to each other and to S³x = x; without finiteness, 3862 implies each of 47, 614, 817, and 47 and 614 imply each other, while the remaining six directions time out. Therefore:
+**All four targets, finite bases.** Vampire also proves (`atp/imp_*.p`, 60 s each) that under 1518 plus left injectivity and left surjectivity, which hold in every finite 1518-magma, the four targets are pairwise equivalent (all twelve implications are theorems); this re-derives observations from the Austin pairs thread: Tao (2024-11-24, message 484117783) that S and all left multiplications are bijective in a finite 1518-magma and that 47 and 614 are equivalent via 359, Tencer (2024-11-28, 484863266) relating 817 to S³x = x, Bolan (2024-11-29, 485153888) that 3862 implies the other three, and Nielsen (2024-11-30, 485248752) that under left cancellation all four are equivalent to each other and to S³x = x; Le Floch restated the finite case in October 2025. Without finiteness, 3862 implies each of 47, 614, 817, and 47 and 614 imply each other, while the remaining six directions time out. Therefore:
 
 > **Theorem (full obstruction, finite bases).** Let `H` be a finite 1518-magma, `M` a finite abelian group with `α, β` making `αs + βt` a 1518-magma, and `f` a 1518-cocycle on `H`. If `H ×_f M` violates one of 47, 614, 817, 3862, then `H` already violates it.
 
@@ -66,4 +66,4 @@ Lean anchoring done for the classification. Still prose: the finite-base equival
 
 ## 5. Prior art
 
-Tao conjectured the classification (with all four targets, for finite magmas) on 2024-11-29 and noted the reduction of one-variable targets to one-generated bases. Nielsen classified the linear 1518-models the same day. No proof of the classification, and no statement with 3862 alone or without finiteness, was found in the ETP blueprint, paper, commentary, either Zulip or arXiv (searches of 2026-09-04). Originality unresolved; the proof is machine-found.
+Tao conjectured the classification (with all four targets) on 2024-11-29 and noted the reduction of one-variable targets to one-generated bases. The same day Nielsen classified the linear 1518-models and Bolan observed with Prover9 that 3862 implies the other three targets, so assuming 3862 alone is not new. No proof of the classification was found in the ETP blueprint, paper, commentary, either Zulip or arXiv (searches of 2026-09-04, which missed Bolan's remark). Originality unresolved; the proof is machine-found.
