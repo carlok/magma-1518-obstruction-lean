@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and check axioms
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      # The project has no dependencies; the Mathlib cache step is skipped
+      # automatically unless Mathlib becomes a dependency.
+      - uses: leanprover/lean-action@v1
+        with:
+          build: true
+          use-mathlib-cache: auto
+      - name: Axiom audit of the headline theorems
+        run: python3 scripts/check_axioms.py

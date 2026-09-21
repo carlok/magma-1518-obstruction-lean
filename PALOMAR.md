@@ -6,7 +6,7 @@ Status on 2026-09-06: **ready, not submitted, not registered.** Submitting is a 
 
 | File | Role |
 | --- | --- |
-| `lean-toolchain` | `leanprover/lean4:v4.33.0` (Palomar minimum v4.28.0; 4.33.0 is the latest release with a `lean4export` tag, which the verifier derives from the Lean version) |
+| `lean-toolchain` | `leanprover/lean4:v4.34.0` (Palomar minimum v4.28.0; 4.34.0 has a `lean4export` tag, which the verifier derives from the Lean version). The dry run recorded below was made at v4.33.0. |
 | `lakefile.toml`, `lake-manifest.json` | Lake project with no dependencies: library `Magma1518` (`lean/OneGenerated1518.lean`, `FamilyF5.lean`, `FamilyF13.lean`, `L2Cert.lean`, `H2Cert.lean`) plus the `Challenge` and `Solution` modules; the `bv_decide` census files are outside every library |
 | `Challenge.lean` | statements only, core Lean, no imports, 178 lines: Theorem A (`Magma1518.table`, `cube`, `words_in_T`, `one_or_three`) and the F₅ and F₁₃ members of Theorem F defined by their coefficient matrices (`familyF5_law1518`, `familyF5_refutes`, `familyF5_squaring_order`, same for F₁₃); the module docstring is the informal account |
 | `Solution.lean` | the same definitions verbatim, proofs from `lean/OneGenerated1518.lean` and by kernel `decide` |

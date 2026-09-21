@@ -74,16 +74,16 @@ The census is corroboration only: result 1 makes it unnecessary.
 ## Check it
 
 ```
-lean +v4.33.0 lean/OneGenerated1518.lean        # 0.2 s
-lean +v4.33.0 lean/L2Cert.lean                  # ~9 s
-lean +v4.33.0 lean/H2Cert.lean
-lean +v4.33.0 lean/FamilyF5.lean lean/FamilyF13.lean   # under a second each
-lean +v4.33.0 -M 16384 lean/census/Census1518_7.lean   # ~1 min; size 8 ~7 min
+lean +v4.34.0 lean/OneGenerated1518.lean        # 0.2 s
+lean +v4.34.0 lean/L2Cert.lean                  # ~9 s
+lean +v4.34.0 lean/H2Cert.lean
+lean +v4.34.0 lean/FamilyF5.lean lean/FamilyF13.lean   # under a second each
+lean +v4.34.0 -M 16384 lean/census/Census1518_7.lean   # ~1 min; size 8 ~7 min
 sh check.sh                                     # all of the above
 lake build                                      # library (lean/), Challenge (sorry warnings expected) and Solution, ~15 s
 ```
 
-The notes were written with Lean 4.33.1; the toolchain is pinned to 4.33.0 because the Palomar verifier derives its exporter from the Lean version and 4.33.1 has no `lean4export` release. Every file checks with both.
+The notes were written with Lean 4.33.1. The toolchain is pinned to a release with a `lean4export` tag, because the Palomar verifier derives its exporter from the Lean version (4.33.1 has none): first 4.33.0, now 4.34.0. Every file checks with 4.33.1, 4.33.0 and 4.34.0.
 
 Automated proofs: `vampire --mode casc -t 60 atp/eq_x_sx.p` (nine files `eq_*.p`, milliseconds each; `atp/min_e3862.p` proves all nine at once from 1518 and 3862; `atp/control_no_targets.p` should time out).
 
