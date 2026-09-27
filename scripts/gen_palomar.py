@@ -2,10 +2,13 @@
 Challenge.lean: statements only (core Lean, no imports): Theorem A (table, S^3 = id, words, one-or-three) for arbitrary magmas
 satisfying 1518 and 3862, and the F_5 and F_13 members of Theorem F defined by their coefficient matrices on Z/3 x F_p.
 Solution.lean: the same definitions verbatim, proofs via lean/OneGenerated1518.lean and kernel `decide`.
-Usage: python3 scripts/gen_palomar.py data   (reads data/etp/equations.txt and data/fifteen/family_Qi.json)"""
+Usage: python3 scripts/gen_palomar.py data                 Theorem A only, the submitted package
+       python3 scripts/gen_palomar.py data --with-family   adds the F_5 and F_13 members of Theorem F
+(reads data/etp/equations.txt and data/fifteen/family_Qi.json)"""
 import sys, json, re, itertools
 from fractions import Fraction as Fr
-S = sys.argv[1]
+WITH_FAMILY = "--with-family" in sys.argv
+S = next(a for a in sys.argv[1:] if not a.startswith("--"))
 eq = open(f"{S}/etp/equations.txt").read().splitlines()
 fam = json.load(open(f"{S}/fifteen/family_Qi.json"))["F+"]
 def parse(st):
@@ -66,6 +69,7 @@ for p in (5, 13):
         return z
     assert all(it(sq, z, 12) == z for z in range(n)); z3 = next(z for z in range(n) if it(sq, z, 3) != z); wit["sq3"] = (z3 // p, z3 % p)
     fin[p] = (ip, A, B, wit)
+    if not WITH_FAMILY: continue
     shared += [f"/-- Coefficient matrix `a` of Theorem F reduced modulo {p} with `i = {ip}` (`i² = −1`): over `Q(i)`,",
                "    `a = [[-(1+i)/2, -1/2, (1-i)/2], [(1-i)/2, -(1+i)/2, 1+i], [1+i, (1-i)/2, 2i]]`. -/",
                f"def a{p} : Fin 3 → Fin 3 → Fin {p}", "\n".join(f"  | {x}, {y} => {A[x][y]}" for x in range(3) for y in range(3)), "",
@@ -87,7 +91,7 @@ stmts = [
  ("one_or_three", "Corollary A′: either `S x = x = S (S x)` (one element) or `x, S x, S (S x)` are pairwise distinct (three elements).",
   "{G : Type} (op : G → G → G) (h1 : Law1518 op) (h2 : Law3862 op) (x : G) :\n    (op x x = x ∧ op (op x x) (op x x) = x) ∨\n    (op x x ≠ x ∧ op (op x x) (op x x) ≠ x ∧ op (op x x) (op x x) ≠ op x x)"),
 ]
-for p in (5, 13):
+for p in (5, 13) if WITH_FAMILY else ():
     stmts += [
      (f"familyF{p}_law1518", f"Theorem F over `F_{p}`: the {3*p}-element magma `op{p}` satisfies law 1518.", f": Law1518 op{p}"),
      (f"familyF{p}_refutes", f"Theorem F over `F_{p}`: `op{p}` violates each of the laws 47, 614, 817 and 3862.", f": ¬ Law47 op{p} ∧ ¬ Law614 op{p} ∧ ¬ Law817 op{p} ∧ ¬ Law3862 op{p}"),
@@ -130,6 +134,38 @@ tables.  Proofs are in `Solution.lean`, which restates each declaration and prov
 (a transcription of equational proofs found by Vampire 5.1.0) and by `decide`.
 -/
 '''
+header_c_a = '''/-!
+# One-generated (1518 + 3862)-magmas are trivial or the Z/3 shift
+
+Laws are numbered as in the Equational Theories Project (ETP, `teorth/equational_theories`): a law is an identity between
+two words in a binary operation `◇`, and a magma satisfies it when the identity holds for all values of the variables.
+Write `S x = x ◇ x`.
+
+**Theorem A.** In every magma satisfying laws 1518 (`x = (y ◇ y) ◇ (x ◇ (y ◇ x))`) and 3862 (`x ◇ x = (x ◇ (x ◇ x)) ◇ x`),
+for every `x` and all `u, v` in `T = {x, S x, S (S x)}` one has `u ◇ v = S v`, and `S (S (S x)) = x`.  Hence every word
+in `x` lies in `T`, and `T` has one element or three distinct elements on which `◇` is the cyclic shift `u ◇ v = S v`.
+So every one-generated magma satisfying 1518 and 3862 is the trivial magma or the Z/3 shift `x ◇ y = y + 1`.
+No finiteness is assumed.
+Declarations `table`, `cube`, `words_in_T`, `one_or_three`.
+
+**Where the statement comes from.** Terence Tao conjectured it on the Lean Zulip (Equational stream, "Austin pairs",
+2024-11-29, message 485148288), for magmas satisfying 1518 together with all four of 47, 614, 817 and 3862.  That message
+carried no finiteness hypothesis.  Assuming 3862 alone is no weaker rather than stronger: Matthew Bolan reported the same
+day (message 485153888) that 1518 and 3862 already imply the other three targets.  What is added here is a proof.  The
+ETP sources, the Lean Zulip Equational stream, the SAIR Zulip, arXiv and the Palomar registry were searched (September
+2026) without finding one; the result may be folklore.
+
+**Why the classification was wanted.** In that thread the one-generated models of 1518 are the candidate *base* models for
+the cohomological construction of countermodels, which is why Tao asked for them: with the classification, a
+constant-coefficient abelian extension of a finite 1518-magma can violate 47, 614, 817 or 3862 only if its base already
+does, so the construction cannot settle those four implications from any finite base.  That consequence is proved in the
+repository in prose from kernel-checked certificate identities; it is not stated in this Challenge, and neither is the
+explicit family of finite 1518-magmas that does refute the four targets with base-dependent coefficients.
+
+The definitions below are the ordinary ones.  Proofs are in `Solution.lean`, which restates each declaration and proves it
+from `lean/OneGenerated1518.lean`, a transcription of equational proofs found by Vampire 5.1.0.
+-/
+'''
 header_s = '''import OneGenerated1518
 
 /-!
@@ -142,7 +178,7 @@ kernel `decide` on the coefficient-matrix definition of the tables.
 
 set_option maxRecDepth 100000
 '''
-chal = [header_c] + shared
+chal = [header_c if WITH_FAMILY else header_c_a] + shared
 for name, doc, ty in stmts: chal += [f"/-- {doc} -/", f"theorem {name} {ty} := by\n  sorry", ""]
 chal.append("end Magma1518")
 sol = [header_s] + shared
@@ -152,7 +188,7 @@ proofs = {
  "words_in_T": "  induction w with\n  | v => exact Or.inl rfl\n  | m a b iha ihb => exact OneGenerated1518.closed op h1 h2 x _ _ iha ihb",
  "one_or_three": "  exact OneGenerated1518.one_or_three op h1 h2 x",
 }
-for p in (5, 13):
+for p in (5, 13) if WITH_FAMILY else ():
     ip, A, B, wit = fin[p]
     l, r = eq[1517].split(" = ")
     proofs[f"familyF{p}_law1518"] = (f"  have h : ∀ x1 : Fin 3, ∀ x2 : Fin {p}, ∀ y1 : Fin 3, ∀ y2 : Fin {p},\n      (x1, x2) = op{p} (op{p} (y1, y2) (y1, y2)) (op{p} (x1, x2) (op{p} (y1, y2) (x1, x2))) := by decide\n"

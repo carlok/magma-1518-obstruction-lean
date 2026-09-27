@@ -1,7 +1,9 @@
 /-
 Axiom audit of the headline results: the Palomar surface in `Solution.lean`
-(Theorem A, Corollary A′, Theorem F for `F₅` and `F₁₃`) and the kernel-checked
-certificates of the library in `lean/` (Theorems B and B′, Theorem F).
+(Theorem A and Corollary A′) and the kernel-checked certificates of the library
+in `lean/` (Theorems B and B′, and the F₅ and F₁₃ members of Theorem F, which
+are audited there under their library names rather than through the Palomar
+surface).
 
 `scripts/check_axioms.py` runs this file and fails unless every theorem below
 depends on `propext`, `Classical.choice` and `Quot.sound` only.
@@ -21,12 +23,6 @@ import FamilyF13
 #print axioms Magma1518.cube
 #print axioms Magma1518.words_in_T
 #print axioms Magma1518.one_or_three
-#print axioms Magma1518.familyF5_law1518
-#print axioms Magma1518.familyF5_refutes
-#print axioms Magma1518.familyF5_squaring_order
-#print axioms Magma1518.familyF13_law1518
-#print axioms Magma1518.familyF13_refutes
-#print axioms Magma1518.familyF13_squaring_order
 #print axioms OneGenerated1518.table
 #print axioms OneGenerated1518.words_in_T
 #print axioms OneGenerated1518.one_or_three
