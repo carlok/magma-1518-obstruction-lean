@@ -48,7 +48,7 @@ Then 1518 holds and 47, 614, 817, 3862 all fail. Squaring is an endomorphism wit
 
 | Statement | Independent confirmations |
 | --- | --- |
-| A, A′ | Vampire 5.1.0 (nine refutations, milliseconds) · core Lean 4.33.0 transcription, no axioms · brute force on all 1 + 6 + 54 + 632 + 41,319 1518-magmas of sizes 2 to 6 (largest one-generated submagma has 3 elements) · failure on `Refutation939` as negative control (60 of 135 products leave the set) |
+| A, A′ | Vampire 5.1.0 (nine refutations, milliseconds) · core Lean 4.34.0 transcription, no axioms · brute force on all 1 + 6 + 54 + 632 + 41,319 1518-magmas of sizes 2 to 6 (largest one-generated submagma has 3 elements) · failure on `Refutation939` as negative control (60 of 135 products leave the set) |
 | A″ | Vampire only |
 | B0 | written proof; consistent with Nielsen's classification over integral domains |
 | B, B′ (identities) | Python re-multiplication in `R` · Lean kernel `decide` (`propext`) · 39 numeric specialisations `β = r ∈ F_p`, `p ≤ 47` (dim Z² = dim B² = 2) · Z/4 brute force (16 cocycles, 16 coboundaries) |

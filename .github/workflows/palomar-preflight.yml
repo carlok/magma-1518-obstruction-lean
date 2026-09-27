@@ -1,0 +1,34 @@
+# Palomar's own mechanical check, run before submitting. The registry requires
+# the complete reusable workflow at mode: full; a local `lake build`, this
+# repository's CI, or a standalone Comparator run is not equivalent.
+#
+# The workflow reference and the pipeline_commit input must be the same full
+# PalomarSubmission commit. execution_profile is needed because these jobs run
+# on GitHub-hosted runners, where Palomar's own runner labels do not exist.
+name: Palomar preflight
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: Full 40-character commit of this repository to check
+        required: true
+        type: string
+      request_id:
+        description: Lowercase identifier for the preflight artifact
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    uses: PalomarRegistry/PalomarSubmission/.github/workflows/submission.yml@a59f25bd8a66bf6faf3a4f4260d412989c0185ea
+    with:
+      repository: carlok/magma-1518-obstruction-lean
+      commit: ${{ inputs.commit }}
+      pipeline_commit: a59f25bd8a66bf6faf3a4f4260d412989c0185ea
+      request_id: ${{ inputs.request_id }}
+      mode: full
+      execution_profile: palomar-standard-v1
