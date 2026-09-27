@@ -9,8 +9,10 @@ Write `S x = x ◇ x`.
 for every `x` and all `u, v` in `T = {x, S x, S (S x)}` one has `u ◇ v = S v`, and `S (S (S x)) = x`.  Hence every word
 in `x` lies in `T`, and `T` has one element or three distinct elements on which `◇` is the cyclic shift `u ◇ v = S v`.
 So every one-generated magma satisfying 1518 and 3862 is the trivial magma or the Z/3 shift `x ◇ y = y + 1`.  This is the
-statement Terence Tao conjectured on the Lean Zulip (Equational stream, "Austin pairs", 2024-11-29, message 485148288)
-for finite magmas satisfying 1518 and all four of 47, 614, 817, 3862; here one target suffices and no finiteness is used.
+statement Terence Tao conjectured on the Lean Zulip (Equational stream, "Austin pairs", 2024-11-29, message 485148288),
+for magmas satisfying 1518 and all four of 47, 614, 817, 3862.  That message carried no finiteness hypothesis, and
+assuming 3862 alone is no weaker: Matthew Bolan reported the same day (message 485153888) that 1518 and 3862 already
+imply the other three targets.  What is added here is a proof; none was found in the venues searched.
 Declarations `table`, `cube`, `words_in_T`, `one_or_three`.
 
 **Theorem F (two members).** Let `R` be a commutative ring with `1/2` and an element `i` with `i² = −1`, and `M ≠ 0` an
