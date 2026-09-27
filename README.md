@@ -48,7 +48,7 @@ Then 1518 holds and 47, 614, 817, 3862 all fail. Squaring is an endomorphism wit
 
 | Statement | Independent confirmations |
 | --- | --- |
-| A, A′ | Vampire 5.1.0 (nine refutations, milliseconds) · core Lean 4.34.0 transcription, no axioms · brute force on all 1 + 6 + 54 + 632 + 41,319 1518-magmas of sizes 2 to 6 (largest one-generated submagma has 3 elements) · failure on `Refutation939` as negative control (60 of 135 products leave the set) |
+| A, A′ | Vampire 5.1.0 (nine refutations, milliseconds) · core Lean 4.35.0-rc3 transcription, no axioms · brute force on all 1 + 6 + 54 + 632 + 41,319 1518-magmas of sizes 2 to 6 (largest one-generated submagma has 3 elements) · failure on `Refutation939` as negative control (60 of 135 products leave the set) |
 | A″ | Vampire only |
 | B0 | written proof; consistent with Nielsen's classification over integral domains |
 | B, B′ (identities) | Python re-multiplication in `R` · Lean kernel `decide` (`propext`) · 39 numeric specialisations `β = r ∈ F_p`, `p ≤ 47` (dim Z² = dim B² = 2) · Z/4 brute force (16 cocycles, 16 coboundaries) |
@@ -74,16 +74,16 @@ The census is corroboration only: result 1 makes it unnecessary.
 ## Check it
 
 ```
-lean +v4.34.0 lean/OneGenerated1518.lean        # 0.2 s
-lean +v4.34.0 lean/L2Cert.lean                  # ~9 s
-lean +v4.34.0 lean/H2Cert.lean
-lean +v4.34.0 lean/FamilyF5.lean lean/FamilyF13.lean   # under a second each
-lean +v4.34.0 -M 16384 lean/census/Census1518_7.lean   # ~1 min; size 8 ~7 min
+lean +v4.35.0-rc3 lean/OneGenerated1518.lean        # 0.2 s
+lean +v4.35.0-rc3 lean/L2Cert.lean                  # ~9 s
+lean +v4.35.0-rc3 lean/H2Cert.lean
+lean +v4.35.0-rc3 lean/FamilyF5.lean lean/FamilyF13.lean   # under a second each
+lean +v4.35.0-rc3 -M 16384 lean/census/Census1518_7.lean   # ~1 min; size 8 ~7 min
 sh check.sh                                     # all of the above
 lake build                                      # library (lean/), Challenge (sorry warnings expected) and Solution, ~15 s
 ```
 
-The notes were written with Lean 4.33.1. The toolchain is pinned to a release with a `lean4export` tag, because the Palomar verifier derives its exporter from the Lean version (4.33.1 has none): first 4.33.0, now 4.34.0. Every file checks with 4.33.1, 4.33.0 and 4.34.0.
+The notes were written with Lean 4.33.1. The toolchain is pinned to a release that both clears Palomar's declared minimum and has a `lean4export` tag, because the verifier derives its exporter from the Lean version: 4.33.0, then 4.34.0, now 4.35.0-rc3. Every file checks with 4.33.1, 4.33.0, 4.34.0 and 4.35.0-rc3.
 
 Automated proofs: `vampire --mode casc -t 60 atp/eq_x_sx.p` (nine files `eq_*.p`, milliseconds each; `atp/min_e3862.p` proves all nine at once from 1518 and 3862; `atp/control_no_targets.p` should time out).
 
