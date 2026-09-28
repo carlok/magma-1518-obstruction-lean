@@ -1,4 +1,9 @@
-import Lean
+module
+
+public import Lean
+
+@[expose] public section
+
 /-!
 Independent kernel check of the L2 certificate identities.
 R = ℤ[b]/(b^5 + b^3 - b^2 - 1); an element is its coefficient list [c0, c1, c2, c3, c4] for 1, b, b², b³, b⁴.

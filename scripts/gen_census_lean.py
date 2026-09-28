@@ -83,7 +83,13 @@ if n == 3:
     reach_props = [h[h.index(":")+2:-1] for h in hyps if h.startswith("(reach_") or h.startswith("(full")]
     controls += f"theorem reach_control_3 : {' ∧ '.join(inst(pr, shift, g0, r) for pr in reach_props)} := by\n  decide\n"
     controls += f"theorem law_control_3_shift : {' ∧ '.join(inst(pr, shift) for pr in law_props)} := by\n  decide\n"
-src = f"""import Std.Tactic.BVDecide
+src = f"""module
+
+public import Std.Tactic.BVDecide
+public meta import Std.Tactic.BVDecide.Reflect
+
+@[expose] public section
+
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 /-!

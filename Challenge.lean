@@ -1,3 +1,7 @@
+module
+
+@[expose] public section
+
 /-!
 # One-generated (1518 + 3862)-magmas are trivial or the Z/3 shift
 

@@ -1,3 +1,5 @@
+module
+
 /-
 Axiom audit of the headline results: the Palomar surface in `Solution.lean`
 (Theorem A and Corollary A′) and the kernel-checked certificates of the library
@@ -12,12 +14,15 @@ The `bv_decide` census under `lean/census/` is not audited here: it is
 corroboration only, is not part of any library, and depends on native
 evaluation by design (see the README, "Three trust levels").
 -/
-import Solution
-import OneGenerated1518
-import L2Cert
-import H2Cert
-import FamilyF5
-import FamilyF13
+public import Solution
+public import OneGenerated1518
+public import L2Cert
+public import H2Cert
+public import FamilyF5
+public import FamilyF13
+
+@[expose] public section
+
 
 #print axioms Magma1518.table
 #print axioms Magma1518.cube

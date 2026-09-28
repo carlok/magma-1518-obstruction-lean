@@ -1,4 +1,9 @@
-import Lean
+module
+
+public import Lean
+
+@[expose] public section
+
 /-!
 Kernel check of the homotopy certificate behind H^2_1518(Z/3 shift, M) = 0:  E * P + Q * D = I_9  in R = ℤ[b]/(b^5+b^3-b^2-1).
 D is the 9x9 1518-cocycle matrix, E the 9x3 coboundary matrix, P (3x9) and Q (9x9) the certificate. Same ring arithmetic as L2Cert.lean.

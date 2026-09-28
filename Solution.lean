@@ -1,4 +1,8 @@
-import OneGenerated1518
+module
+
+public import OneGenerated1518
+
+@[expose] public section
 
 /-!
 # Solution: proofs of the declarations of `Challenge.lean`

@@ -166,7 +166,11 @@ The definitions below are the ordinary ones.  Proofs are in `Solution.lean`, whi
 from `lean/OneGenerated1518.lean`, a transcription of equational proofs found by Vampire 5.1.0.
 -/
 '''
-header_s = '''import OneGenerated1518
+header_s = '''module
+
+public import OneGenerated1518
+
+@[expose] public section
 
 /-!
 # Solution: proofs of the declarations of `Challenge.lean`
@@ -178,7 +182,7 @@ kernel `decide` on the coefficient-matrix definition of the tables.
 
 set_option maxRecDepth 100000
 '''
-chal = [header_c if WITH_FAMILY else header_c_a] + shared
+chal = ["module\n\n@[expose] public section\n", header_c if WITH_FAMILY else header_c_a] + shared
 for name, doc, ty in stmts: chal += [f"/-- {doc} -/", f"theorem {name} {ty} := by\n  sorry", ""]
 chal.append("end Magma1518")
 sol = [header_s] + shared

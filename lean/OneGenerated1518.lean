@@ -1,3 +1,7 @@
+module
+
+@[expose] public section
+
 /-!
 # One-generated magmas satisfying laws 1518 and 3862
 

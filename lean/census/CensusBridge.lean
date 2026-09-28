@@ -1,4 +1,9 @@
-import Lean
+module
+
+public import Lean
+
+@[expose] public section
+
 set_option maxRecDepth 200000
 set_option maxHeartbeats 0
 /-!

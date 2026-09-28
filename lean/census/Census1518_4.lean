@@ -1,4 +1,10 @@
-import Std.Tactic.BVDecide
+module
+
+public import Std.Tactic.BVDecide
+public meta import Std.Tactic.BVDecide.Reflect
+
+@[expose] public section
+
 set_option maxRecDepth 100000
 set_option maxHeartbeats 0
 /-!
