@@ -142,7 +142,9 @@ automation:
       tool_setup: >-
         An AI agent working under the author's direction in interactive sessions wrote the search and verification
         scripts, transcribed the nine equational proofs found by Vampire 5.1.0 into lean/OneGenerated1518.lean,
-        generated the finite decide-checked members and this Challenge/Solution pair (scripts/gen_palomar.py, which
+        generated the decide-checked F_5 and F_13 members of Theorem F in the repository's own library
+        (lean/FamilyF5.lean and lean/FamilyF13.lean, via scripts/gen_family_lean.py; not part of the submitted Comparator
+        configuration), generated this Challenge/Solution pair, which states Theorem A only (scripts/gen_palomar.py, which
         reads the laws from the project's equations file rather than transcribing them), and drafted the notes.
       cost:
         wall_time: "about three days of interactive sessions, September 2026"
