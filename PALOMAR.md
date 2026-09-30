@@ -1,6 +1,10 @@
-# Palomar readiness record
+# Palomar record
 
-Status on 2026-09-27: **submitted, verified, review returned problems, not registered.** The first submission (commit `047895a`, Lean v4.35.0-rc3) passed mechanical verification in 3 minutes. The automated editorial review then identified two problems and registration was not offered:
+Status on 2026-09-30: **registered** as [`PALOMAR-2026-09-30-000005`](https://palomar-registry.org/entry?id=PALOMAR-2026-09-30-000005&version=1), version 1, at commit `eb2bbde8c137570d0e281a237187f5323a1b0a2d`. Record JSON: <https://data.palomar-registry.org/entries/PALOMAR-2026-09-30-000005-v1.json>. Source preservation: `PalomarArchive/carlok--magma-1518-obstruction-lean--763845730337`, tag `palomar/PALOMAR-2026-09-30-000005-v1/eb2bbde8c137570d0e281a237187f5323a1b0a2d`.
+
+## Submission history
+
+The first submission (commit `047895a`, Lean v4.35.0-rc3) passed mechanical verification in 3 minutes. The automated editorial review then identified two problems and registration was not offered:
 
 1. the abstract, source record and Challenge account presented "no finiteness" and "one target law instead of four" as strengthening Tao's conjecture, contradicting this repository's own prior-work account, which says the conjecture carried no finiteness hypothesis and that 1518 and 3862 were already known to imply the other three targets;
 2. the compared declarations included the F₅ and F₁₃ members of Theorem F, which are two concrete finite examples rather than the family or the classification, one of them isomorphic to a countermodel already formalized in the ETP; on the selected results alone the review did not find the research interest established for that group.
@@ -10,6 +14,8 @@ Both were addressed: the overstatement was corrected everywhere it appeared, and
 The second submission (commit `af908bb`) passed mechanical verification, and the review found no mathematical blocking issue in the selected statements. It identified one presentation problem, 2026-09-28: the README still described the ten-declaration package, overstating what the submitted configuration checks. The README now separates the four compared declarations from the repository's other results, and the check record below separates the current package from the earlier one.
 
 A third attempt (commit `1794778`) was stopped before verification by a new preliminary check: every `.lean` file in the repository must begin with the `module` header. Palomar migrated its own template to Lean's module system on 2026-09-28 (PalomarTemplate `2891de4`). All sixteen Lean files are now modules. Definitions are placed in `@[expose] public section`, which keeps their bodies visible to importing files as before; this matters because `Solution.lean` relies on unfolding `OneGenerated1518.inT` across the file boundary. The `bv_decide` census files additionally need `public meta import Std.Tactic.BVDecide.Reflect`, without which every `bv_decide` fails and the census theorems silently fall back to `sorryAx`. Every axiom footprint is unchanged by the port. The three generators (`gen_palomar.py`, `gen_family_lean.py`, `gen_census_lean.py`) emit the module form, and regenerating reproduces the committed files byte for byte.
+
+The fourth submission (commit `eb2bbde`, the module port) passed mechanical verification on 2026-09-28 at 07:50Z, with the proof terms replayed by the nanoda and con-ron kernels, and the Challenge render. The automated review (07:59Z) returned outcome neutral with no warnings and offered registration, which was requested at 08:09Z. Registration then waited until 2026-09-30: for most of that time the registry created no archive copies for any submission (reported in [PalomarSubmission#156](https://github.com/PalomarRegistry/PalomarSubmission/issues/156)). The archive copy was made and the record registered at 01:30Z on 2026-09-30.
 
 Registration certifies that the proofs check, not that the result is new.
 
